@@ -1,0 +1,3740 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#E04F26" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>SORA — Sinergi Organisasi &amp; Aspirasi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --bg-paper: #F6F3EC;
+      --bg-surface: #FFFDF9;
+      --bg-subtle: #EDE8DC;
+      --ink-main: #181816;
+      --ink-muted: #57554E;
+      --border-ink: #1C1B18;
+      --accent-vermilion: #E04F26;
+      --accent-emerald: #1F6E4A;
+      --accent-amber: #D98A16;
+      --shadow-arch: 3px 3px 0px #1C1B18;
+      --shadow-arch-lg: 5px 5px 0px #1C1B18;
+      --grid-line: rgba(28, 27, 24, 0.06);
+    }
+
+    html.dark {
+      --bg-paper: #111214;
+      --bg-surface: #191B1F;
+      --bg-subtle: #22252B;
+      --ink-main: #F3F1EC;
+      --ink-muted: #9FA3AD;
+      --border-ink: #2E3138;
+      --accent-vermilion: #FF6B42;
+      --accent-emerald: #34B37A;
+      --accent-amber: #F0A32E;
+      --shadow-arch: 3px 3px 0px #08090B;
+      --shadow-arch-lg: 5px 5px 0px #08090B;
+      --grid-line: rgba(243, 241, 236, 0.04);
+    }
+
+    body {
+      background-color: var(--bg-paper);
+      color: var(--ink-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 28px 28px;
+      transition: background-color 0.22s ease, color 0.22s ease;
+      overflow-x: hidden;
+    }
+
+    .font-display {
+      font-family: 'Syne', sans-serif;
+      letter-spacing: -0.03em;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .arch-card {
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-ink);
+      box-shadow: var(--shadow-arch);
+      border-radius: 16px;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.22s ease, border-color 0.22s ease;
+    }
+
+    .arch-lift:hover {
+      transform: translate(-1.5px, -1.5px);
+      box-shadow: var(--shadow-arch-lg);
+    }
+
+    .arch-btn {
+      border: 1.5px solid var(--border-ink);
+      box-shadow: 2px 2px 0px var(--border-ink);
+      border-radius: 12px;
+      font-weight: 700;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.18s ease;
+    }
+
+    html.dark .arch-btn {
+      box-shadow: 2px 2px 0px #08090B;
+    }
+
+    .arch-btn:active {
+      transform: translate(1.5px, 1.5px);
+      box-shadow: 0px 0px 0px transparent;
+    }
+
+    .arch-input {
+      background-color: var(--bg-subtle);
+      color: var(--ink-main);
+      border: 1.5px solid var(--border-ink);
+      border-radius: 12px;
+      transition: box-shadow 0.15s ease, background-color 0.18s ease;
+    }
+
+    .arch-input:focus {
+      outline: none;
+      box-shadow: 3px 3px 0px var(--accent-vermilion);
+    }
+
+    .tag-stamp {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: 1.5px solid var(--border-ink);
+      border-radius: 999px;
+      padding: 2px 9px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-view {
+      animation: fadeSlideUp 0.22s ease forwards;
+    }
+
+    /* Print-Ready Formal Letterhead Styles */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+      #app-shell,
+      #toast-stack,
+      #role-modal,
+      #confirm-modal,
+      #qr-sync-modal,
+      .no-print {
+        display: none !important;
+      }
+      #print-sheet {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+    }
+  </style>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8C%90</text></svg>" />
+  <meta property="og:title" content="SORA — Sinergi Organisasi & Aspirasi" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <style>html,body{overscroll-behavior-y:contain;-webkit-tap-highlight-color:transparent;}</style>
+</head>
+<body class="min-h-screen flex flex-col pb-24 lg:pb-12 selection:bg-[#E04F26] selection:text-white">
+
+  <!-- Toast Notification Stack -->
+  <div id="toast-stack" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-[calc(100vw-2rem)] sm:max-w-sm pointer-events-none"></div>
+
+  <!-- Print-Ready Official Letterhead Sheet (Visible in Preview Modal & Print Media) -->
+  <div id="print-sheet" class="hidden fixed inset-0 z-50 bg-black/75 overflow-y-auto p-3 sm:p-8">
+    <div class="max-w-3xl mx-auto bg-white text-zinc-950 rounded-2xl border-2 border-zinc-900 shadow-2xl p-6 sm:p-10 space-y-6">
+      <div class="no-print flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-zinc-300">
+        <span class="font-mono-code text-xs font-bold uppercase text-zinc-600">Pratinjau Dokumen Siap Cetak / Simpan PDF</span>
+        <div class="flex items-center gap-2">
+          <button id="trigger-window-print-btn" type="button" class="px-4 py-2 rounded-xl bg-[#E04F26] text-white text-xs font-bold border border-zinc-950 cursor-pointer">
+            Cetak / Simpan PDF
+          </button>
+          <button id="close-print-sheet-btn" type="button" class="px-4 py-2 rounded-xl bg-zinc-200 text-zinc-900 text-xs font-bold border border-zinc-950 cursor-pointer">
+            Tutup
+          </button>
+        </div>
+      </div>
+      <div id="print-sheet-body" class="space-y-5"></div>
+    </div>
+  </div>
+
+  <!-- Main Application Shell -->
+  <div id="app-shell" class="flex-1 flex flex-col">
+    <!-- Top Architectural Masthead -->
+    <header class="sticky top-0 z-40 border-b-[1.5px] border-[var(--border-ink)] bg-[var(--bg-paper)]/95 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-3.5 sm:px-6 py-3 flex items-center justify-between gap-2.5">
+        <!-- Brand Emblem + Identity -->
+        <button id="brand-home-btn" type="button" class="flex items-center gap-3 text-left group cursor-pointer min-w-0">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[var(--accent-vermilion)] text-white border-[1.5px] border-[var(--border-ink)] shadow-[2px_2px_0px_var(--border-ink)] flex items-center justify-center shrink-0 group-hover:rotate-3 transition-transform">
+            <!-- Custom Geometric Compass + Star Emblem for OSIS & Dewan Ambalan -->
+            <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.1">
+              <circle cx="16" cy="16" r="11" />
+              <polygon points="16,4 19.2,12.8 28,16 19.2,19.2 16,28 12.8,19.2 4,16 12.8,12.8" fill="currentColor" fill-opacity="0.22" />
+              <circle cx="16" cy="16" r="2.2" fill="currentColor" />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span id="masthead-title" class="font-display font-extrabold text-lg sm:text-xl tracking-tight truncate">SORA</span>
+              <span id="master-pill" class="hidden tag-stamp bg-[var(--accent-amber)] text-zinc-950">MASTER 2009</span>
+            </div>
+            <p id="masthead-subtitle" class="text-[11px] sm:text-xs text-[var(--ink-muted)] truncate">
+              Pusat Komando & Aspirasi • OSIS & Dewan Ambalan
+            </p>
+          </div>
+        </button>
+
+        <!-- Right Controls -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <span id="active-role-badge" class="hidden md:inline-flex tag-stamp bg-[var(--bg-surface)] text-[var(--ink-main)]">
+            <span id="active-role-dot" class="w-2 h-2 rounded-full bg-[var(--accent-emerald)]"></span>
+            <span id="active-role-text">SISWA</span>
+          </span>
+
+          <button id="pwa-install-btn" type="button" class="hidden arch-btn px-2.5 py-2 text-xs bg-[var(--accent-emerald)] text-white items-center gap-1.5 cursor-pointer">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+            </svg>
+            <span class="hidden sm:inline">Install App</span>
+          </button>
+
+          <button id="quick-backup-btn" type="button" title="Export Backup JSON" class="arch-btn px-2.5 py-2 text-xs bg-[var(--bg-surface)] text-[var(--ink-main)] flex items-center gap-1.5 cursor-pointer">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+            </svg>
+            <span class="hidden sm:inline">Backup</span>
+          </button>
+
+          <button id="open-role-modal-btn" type="button" class="arch-btn px-3 py-2 text-xs bg-[var(--accent-vermilion)] text-white flex items-center gap-1.5 cursor-pointer">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+            <span>Peran / Kode</span>
+          </button>
+
+          <button id="theme-toggle-btn" type="button" aria-label="Ganti Tema" title="Ganti Mode Terang / Gelap" class="arch-btn p-2 bg-[var(--bg-surface)] text-[var(--ink-main)] cursor-pointer">
+            <svg id="icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg id="icon-moon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Top Navigation Strip (Strict Role Isolation) -->
+      <nav id="desktop-nav" class="hidden lg:flex max-w-7xl mx-auto px-6 pb-3 items-center gap-2 overflow-x-auto no-scrollbar"></nav>
+    </header>
+
+    <!-- Main Workspace -->
+    <main id="app-main" class="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 py-5 sm:py-8 space-y-6 animate-view"></main>
+
+    <!-- Mobile Floating Bottom Dock Navigation (One-Thumb Ergonomics) -->
+    <nav id="mobile-dock" class="lg:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-40 w-[calc(100vw-1.25rem)] max-w-2xl bg-[var(--ink-main)] text-[var(--bg-paper)] border-[1.5px] border-[var(--border-ink)] rounded-2xl shadow-[0_10px_28px_rgba(0,0,0,0.32)] px-1.5 py-1.5 flex items-center gap-1 overflow-x-auto no-scrollbar"></nav>
+  </div>
+
+  <!-- Role Switch & Special Access Code Modal -->
+  <div id="role-modal" class="fixed inset-0 z-50 hidden items-end sm:items-center justify-center p-0 sm:p-5 bg-black/65 backdrop-blur-xs">
+    <div class="arch-card w-full max-w-lg rounded-b-none sm:rounded-2xl max-h-[92vh] overflow-y-auto p-5 sm:p-6 space-y-5">
+      <div class="flex items-start justify-between gap-3 border-b-[1.5px] border-[var(--border-ink)] pb-3.5">
+        <div>
+          <span class="tag-stamp bg-[var(--accent-amber)] text-zinc-950">KONTROL AKSES PERAN</span>
+          <h2 class="font-display font-extrabold text-xl sm:text-2xl mt-1.5">Masuk & Ganti Peran</h2>
+          <p class="text-xs text-[var(--ink-muted)] mt-0.5">
+            Siswa masuk terbuka tanpa kode. Pengurus & Pembina wajib verifikasi kode khusus.
+          </p>
+        </div>
+        <button id="close-role-modal-btn" type="button" class="arch-btn p-2 bg-[var(--bg-subtle)] text-[var(--ink-main)] cursor-pointer" aria-label="Tutup">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Direct Student Entry -->
+      <div class="p-4 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div class="font-bold text-sm flex items-center gap-2">
+            <span>Mode Siswa (Publik)</span>
+            <span class="tag-stamp bg-[var(--accent-emerald)] text-white">TERBUKA</span>
+          </div>
+          <p class="text-xs text-[var(--ink-muted)] mt-0.5">
+            Beranda, Aspirasi, Jadwal (.ics), Mading Karya, dan Lost & Found. Seluruh menu internal disembunyikan.
+          </p>
+        </div>
+        <button id="switch-siswa-btn" type="button" class="arch-btn px-4 py-2 text-xs bg-[var(--accent-emerald)] text-white shrink-0 cursor-pointer">
+          Aktifkan Siswa
+        </button>
+      </div>
+
+      <!-- Access Code Verification -->
+      <form id="code-verify-form" class="p-4 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-surface)] space-y-3">
+        <label for="special-code-input" class="block font-mono-code text-xs font-bold uppercase tracking-wider">
+          Kode Khusus Pengurus / Pembina / Master
+        </label>
+        <p class="text-xs text-[var(--ink-muted)]">
+          Masukkan kode akses <strong>OSIS</strong>, <strong>DEWAN AMBALAN</strong>, <strong>PEMBINA</strong>, atau kode master untuk membuka ruang komando internal.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="special-code-input" type="text" required autocomplete="off" placeholder="Ketik kode akses..." class="arch-input font-mono-code flex-1 px-3.5 py-2.5 text-sm font-bold tracking-wider" />
+          <button type="submit" class="arch-btn px-5 py-2.5 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">
+            Buka Akses
+          </button>
+        </div>
+        <p id="code-error-msg" class="hidden text-xs font-bold text-[#E04F26] dark:text-[#FF6B42]"></p>
+      </form>
+
+      <!-- Master Quick Role Switcher (Rendered ONLY when 2009 / RUL2009 unlocked) -->
+      <div id="master-switcher-box" class="hidden p-4 rounded-xl border-[1.5px] border-[var(--accent-amber)] bg-[var(--bg-subtle)] space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="font-mono-code text-xs font-bold uppercase">Master Studio Switcher</span>
+          <span class="tag-stamp bg-[var(--accent-amber)] text-zinc-950">ACTIVE</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <button type="button" data-master-role="SISWA" class="master-role-btn arch-btn py-2 text-xs bg-[var(--bg-surface)] cursor-pointer">SISWA</button>
+          <button type="button" data-master-role="OSIS" class="master-role-btn arch-btn py-2 text-xs bg-[var(--bg-surface)] cursor-pointer">OSIS</button>
+          <button type="button" data-master-role="DEWAN AMBALAN" class="master-role-btn arch-btn py-2 text-xs bg-[var(--bg-surface)] cursor-pointer">AMBALAN</button>
+          <button type="button" data-master-role="PEMBINA" class="master-role-btn arch-btn py-2 text-xs bg-[var(--bg-surface)] cursor-pointer">PEMBINA</button>
+        </div>
+      </div>
+
+      <div class="text-[11px] text-[var(--ink-muted)] flex items-center justify-between pt-1">
+        <span>Arsitektur SORA • Muhammad Nazrul Azhar</span>
+        <span class="font-mono-code">PWA + JSON / QR SYNC</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Sync Modal -->
+  <div id="qr-sync-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/65 backdrop-blur-xs">
+    <div class="arch-card w-full max-w-md p-5 sm:p-6 space-y-4 text-center">
+      <div class="flex items-center justify-between border-b-[1.5px] border-[var(--border-ink)] pb-2.5 text-left">
+        <div>
+          <span class="tag-stamp bg-[var(--accent-amber)] text-zinc-950">QR & KODE SINKRONISASI</span>
+          <h3 class="font-display font-extrabold text-lg mt-1">Transfer Paket Data SORA</h3>
+        </div>
+        <button id="close-qr-modal-btn" type="button" class="arch-btn p-2 bg-[var(--bg-subtle)] cursor-pointer" aria-label="Tutup">✕</button>
+      </div>
+      <div id="qr-svg-container" class="mx-auto w-56 h-56 p-3 rounded-2xl border-[1.5px] border-[var(--border-ink)] bg-white flex items-center justify-center"></div>
+      <p class="text-xs text-[var(--ink-muted)]">
+        Salin kode sinkronisasi cepat di bawah ini untuk dikirim lewat WhatsApp, atau simpan file <code>.json</code> untuk arsip lengkap.
+      </p>
+      <textarea id="qr-sync-code-preview" rows="3" readonly class="arch-input font-mono-code w-full p-2.5 text-[11px]"></textarea>
+      <div class="flex gap-2">
+        <button id="copy-sync-from-modal-btn" type="button" class="flex-1 arch-btn py-2.5 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">
+          Salin Kode Sinkronisasi
+        </button>
+        <button id="dl-json-from-modal-btn" type="button" class="flex-1 arch-btn py-2.5 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">
+          Unduh .JSON
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Confirmation Modal -->
+  <div id="confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/65 backdrop-blur-xs">
+    <div class="arch-card w-full max-w-md p-5 sm:p-6 space-y-4">
+      <h3 id="confirm-title" class="font-display font-extrabold text-xl">Konfirmasi Tindakan</h3>
+      <p id="confirm-desc" class="text-xs sm:text-sm text-[var(--ink-muted)] leading-relaxed"></p>
+      <div class="flex justify-end gap-2 pt-2">
+        <button id="confirm-cancel-btn" type="button" class="arch-btn px-4 py-2 text-xs bg-[var(--bg-subtle)] text-[var(--ink-main)] cursor-pointer">Batal</button>
+        <button id="confirm-ok-btn" type="button" class="arch-btn px-4 py-2 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">Ya, Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * SORA — Sinergi Organisasi & Aspirasi
+     * Complete Single-File Production App with:
+     * - Editorial-asymmetric UI ('Kertas & Tinta Sekolah' Light & 'Ruang Komando Malam' Dark)
+     * - Strict role-based DOM isolation (SISWA vs OSIS / DEWAN AMBALAN / PEMBINA)
+     * - Print-ready PDF Letterhead Report Generator (OSIS / Ambalan / Gabungan)
+     * - Dynamic Session Attendance Token + Deterministic QR SVG + Self Check-In
+     * - Student Mading Karya & Prestasi with Pengurus Curation Queue & Applause
+     * - Live Event Mode (Hari H Rundown with active highlight & +15m/-15m bulk shift)
+     * - Lost & Found (Barang Hilang & Temuan) with Pengurus verification
+     * - Compressed Sync Code ('SORA1:...') + QR Sync + JSON Merge/Replace + Offline PWA
+     * Crafted by Muhammad Nazrul Azhar.
+     */
+
+    const STORAGE_KEY = 'sora_command_hub_v3';
+    const THEME_KEY = 'sora_command_theme_v3';
+
+    function createCleanProductionState() {
+      return {
+        role: 'SISWA', // 'SISWA' | 'OSIS' | 'DEWAN AMBALAN' | 'PEMBINA'
+        activeTab: 'beranda',
+        masterUnlocked: false,
+        branding: {
+          title: 'SORA',
+          subtitle: 'Pusat Komando & Aspirasi • OSIS & Dewan Ambalan',
+          schoolName: 'SMA NEGERI PERCONTOHAN NUSANTARA',
+          schoolAddress: 'Jl. Pendidikan No. 01 • Sekretariat OSIS & Sanggar Dewan Ambalan'
+        },
+        accessCodes: {
+          osis: 'OSIS2026',
+          ambalan: 'AMBALAN2026',
+          pembina: 'PEMBINA2026'
+        },
+        upvotedIds: [],
+        applaudedMadingIds: [],
+        votedPolls: {},
+        announcements: [],
+        aspirations: [],
+        schedules: [],
+        polls: [],
+        mading: [], // { id, category, title, creator, mediaUrl, story, status: 'Menunggu Kurasi'|'Disetujui', applause, date }
+        lostFound: [], // { id, kind: 'Barang Hilang'|'Barang Temuan', item, location, contact, detail, status: 'Belum Diambil'|'Sudah Kembali ke Pemilik', date }
+        liveEvent: {
+          eventName: '',
+          eventDate: '',
+          sessions: [] // { id, time, title, pic, active }
+        },
+        tasks: [],
+        meetings: [],
+        attendanceSessions: [], // { id, code, title, org, date, active }
+        attendance: [],
+        ledger: [],
+        inventory: []
+      };
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return createCleanProductionState();
+        const parsed = JSON.parse(raw);
+        const base = createCleanProductionState();
+        return {
+          ...base,
+          ...parsed,
+          branding: { ...base.branding, ...(parsed.branding || {}) },
+          accessCodes: { ...base.accessCodes, ...(parsed.accessCodes || {}) },
+          liveEvent: {
+            ...base.liveEvent,
+            ...(parsed.liveEvent || {}),
+            sessions: Array.isArray(parsed.liveEvent?.sessions) ? parsed.liveEvent.sessions : []
+          },
+          upvotedIds: Array.isArray(parsed.upvotedIds) ? parsed.upvotedIds : [],
+          applaudedMadingIds: Array.isArray(parsed.applaudedMadingIds) ? parsed.applaudedMadingIds : [],
+          votedPolls: parsed.votedPolls && typeof parsed.votedPolls === 'object' ? parsed.votedPolls : {}
+        };
+      } catch (err) {
+        console.error('Error reading localStorage:', err);
+        return createCleanProductionState();
+      }
+    }
+
+    let state = loadState();
+    let pendingConfirmAction = null;
+    let deferredInstallPrompt = null;
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        console.error('Error saving localStorage:', err);
+        showToast('Gagal menyimpan data ke penyimpanan browser.', 'danger');
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatRupiah(num) {
+      const n = Number(num) || 0;
+      const abs = Math.abs(n).toLocaleString('id-ID');
+      return (n < 0 ? '-Rp ' : 'Rp ') + abs;
+    }
+
+    function todayIso() {
+      const d = new Date();
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    function currentTimeHm() {
+      const d = new Date();
+      return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    }
+
+    function formatIndoDate(isoStr) {
+      if (!isoStr) return '-';
+      const parts = String(isoStr).split('-');
+      if (parts.length !== 3) return isoStr;
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      const mIdx = Math.max(0, Math.min(11, Number(parts[1]) - 1));
+      return `${parts[2]} ${months[mIdx]} ${parts[0]}`;
+    }
+
+    function getCountdownMeta(dateStr) {
+      if (!dateStr) return { label: 'TERJADWAL', cls: 'bg-[var(--bg-subtle)] text-[var(--ink-main)]' };
+      const target = new Date(`${dateStr}T00:00:00`);
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diffDays = Math.round((target - today) / 86400000);
+      if (Number.isNaN(diffDays)) return { label: 'TERJADWAL', cls: 'bg-[var(--bg-subtle)] text-[var(--ink-main)]' };
+      if (diffDays < 0) return { label: 'SELESAI', cls: 'bg-zinc-300 text-zinc-800' };
+      if (diffDays === 0) return { label: 'HARI INI', cls: 'bg-[var(--accent-vermilion)] text-white' };
+      if (diffDays <= 7) return { label: `H-${diffDays}`, cls: 'bg-[var(--accent-amber)] text-zinc-950' };
+      return { label: `H-${diffDays}`, cls: 'bg-[var(--accent-emerald)] text-white' };
+    }
+
+    function shiftTimeString(timeStr, deltaMinutes) {
+      return String(timeStr || '').replace(/(\d{1,2}):(\d{2})/g, (_, hhStr, mmStr) => {
+        const hh = Number(hhStr);
+        const mm = Number(mmStr);
+        if (Number.isNaN(hh) || Number.isNaN(mm)) return `${hhStr}:${mmStr}`;
+        let total = (hh * 60 + mm + deltaMinutes) % 1440;
+        if (total < 0) total += 1440;
+        const nh = String(Math.floor(total / 60)).padStart(2, '0');
+        const nm = String(total % 60).padStart(2, '0');
+        return `${nh}:${nm}`;
+      });
+    }
+
+    // Deterministic Matrix QR SVG Generator (Zero external network calls)
+    function generateMatrixQrSvg(payloadText) {
+      const text = String(payloadText || 'SORA');
+      const size = 21;
+      let hash = 2166136261;
+      for (let i = 0; i < text.length; i++) {
+        hash ^= text.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+
+      const isFinder = (r, c) => {
+        const inTL = r < 7 && c < 7;
+        const inTR = r < 7 && c >= size - 7;
+        const inBL = r >= size - 7 && c < 7;
+        if (!inTL && !inTR && !inBL) return null;
+        const lr = r >= size - 7 ? r - (size - 7) : r;
+        const lc = c >= size - 7 ? c - (size - 7) : c;
+        if (lr === 0 || lr === 6 || lc === 0 || lc === 6) return true;
+        if (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4) return true;
+        return false;
+      };
+
+      let cells = '';
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const finder = isFinder(r, c);
+          let filled = false;
+          if (finder !== null) {
+            filled = finder;
+          } else {
+            const charCode = text.charCodeAt((r * size + c) % text.length);
+            const bit = ((hash >>> ((r + c) % 16)) ^ (charCode * (r + 3)) ^ (c * 17)) & 1;
+            filled = bit === 1;
+          }
+          if (filled) {
+            cells += `<rect x="${c}" y="${r}" width="1" height="1" fill="#181816" />`;
+          }
+        }
+      }
+
+      return `
+        <svg viewBox="-1 -1 ${size + 2} ${size + 2}" class="w-full h-full" shape-rendering="crispEdges">
+          <rect x="-1" y="-1" width="${size + 2}" height="${size + 2}" fill="#FFFFFF" />
+          ${cells}
+        </svg>
+      `;
+    }
+
+    function showToast(message, tone = 'info') {
+      const stack = document.getElementById('toast-stack');
+      if (!stack) return;
+      const palette = {
+        info: 'bg-[var(--ink-main)] text-[var(--bg-paper)]',
+        success: 'bg-[var(--accent-emerald)] text-white',
+        warning: 'bg-[var(--accent-amber)] text-zinc-950',
+        danger: 'bg-[var(--accent-vermilion)] text-white'
+      };
+      const el = document.createElement('div');
+      el.className = `pointer-events-auto px-4 py-3 rounded-xl border-[1.5px] border-[var(--border-ink)] shadow-[3px_3px_0px_var(--border-ink)] text-xs sm:text-sm font-bold transition-all duration-200 ${palette[tone] || palette.info}`;
+      el.textContent = message;
+      stack.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-6px)';
+        setTimeout(() => el.remove(), 200);
+      }, 3000);
+    }
+
+    function copyTextSafely(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch (err) {
+        console.error('Copy failed:', err);
+      }
+      ta.remove();
+      return ok;
+    }
+
+    function openConfirm(title, desc, onConfirm) {
+      const modal = document.getElementById('confirm-modal');
+      document.getElementById('confirm-title').textContent = title;
+      document.getElementById('confirm-desc').textContent = desc;
+      pendingConfirmAction = onConfirm;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeConfirm() {
+      const modal = document.getElementById('confirm-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      pendingConfirmAction = null;
+    }
+
+    // Theme System
+    function applyTheme(theme) {
+      const html = document.documentElement;
+      const sun = document.getElementById('icon-sun');
+      const moon = document.getElementById('icon-moon');
+      if (theme === 'dark') {
+        html.classList.add('dark');
+        html.classList.remove('light');
+        sun?.classList.remove('hidden');
+        moon?.classList.add('hidden');
+      } else {
+        html.classList.remove('dark');
+        html.classList.add('light');
+        sun?.classList.add('hidden');
+        moon?.classList.remove('hidden');
+      }
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    // Strict Role Access Isolation
+    function isInternalRole(role = state.role) {
+      return role === 'OSIS' || role === 'DEWAN AMBALAN' || role === 'PEMBINA';
+    }
+
+    function getNavigationTabs() {
+      const publicTabs = [
+        { id: 'beranda', label: 'Beranda', short: 'Beranda', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+        { id: 'aspirasi', label: 'Aspirasi & Lapor', short: 'Aspirasi', icon: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z' },
+        { id: 'jadwal', label: 'Jadwal & Voting', short: 'Jadwal', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
+        { id: 'mading', label: 'Mading Karya', short: 'Mading', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
+        { id: 'lostfound', label: 'Lost & Found', short: 'Temuan', icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' }
+      ];
+
+      // STRICT ISOLATION: SISWA never gets internal tabs in navigation or DOM
+      if (!isInternalRole()) {
+        return publicTabs;
+      }
+
+      const internalTabs = [
+        { id: 'moderasi', label: 'Moderasi & Kurasi', short: 'Moderasi', internal: true, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+        { id: 'live-event', label: 'Live Event Mode', short: 'Live Hari H', internal: true, icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
+        { id: 'proker', label: 'Proker & Notulensi', short: 'Proker', internal: true, icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2' },
+        { id: 'logistik', label: 'Token Absensi, Kas & Logistik', short: 'Absensi/Kas', internal: true, icon: 'M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z' },
+        { id: 'pengaturan', label: 'Cetak PDF & Sinkronisasi', short: 'PDF & Sync', internal: true, icon: 'M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z' }
+      ];
+
+      return [...publicTabs, ...internalTabs];
+    }
+
+    function ensureValidTab() {
+      const allowedIds = getNavigationTabs().map(t => t.id);
+      if (!allowedIds.includes(state.activeTab)) {
+        state.activeTab = 'beranda';
+      }
+    }
+
+    function syncMasthead() {
+      document.getElementById('masthead-title').textContent = state.branding.title || 'SORA';
+      document.getElementById('masthead-subtitle').textContent = state.branding.subtitle || 'Pusat Komando & Aspirasi • OSIS & Dewan Ambalan';
+
+      const masterPill = document.getElementById('master-pill');
+      masterPill?.classList.toggle('hidden', !state.masterUnlocked);
+
+      const roleText = document.getElementById('active-role-text');
+      const roleDot = document.getElementById('active-role-dot');
+      const dotColor = {
+        'SISWA': 'bg-[var(--accent-emerald)]',
+        'OSIS': 'bg-[var(--accent-vermilion)]',
+        'DEWAN AMBALAN': 'bg-[var(--accent-amber)]',
+        'PEMBINA': 'bg-sky-500'
+      };
+      if (roleText) roleText.textContent = state.role;
+      if (roleDot) roleDot.className = `w-2 h-2 rounded-full ${dotColor[state.role] || 'bg-[var(--accent-emerald)]'}`;
+
+      const masterBox = document.getElementById('master-switcher-box');
+      if (masterBox) {
+        masterBox.classList.toggle('hidden', !state.masterUnlocked);
+      }
+    }
+
+    function renderNavigation() {
+      ensureValidTab();
+      syncMasthead();
+      const tabs = getNavigationTabs();
+
+      const deskNav = document.getElementById('desktop-nav');
+      deskNav.innerHTML = tabs.map(t => {
+        const active = state.activeTab === t.id;
+        const baseCls = active
+          ? 'bg-[var(--ink-main)] text-[var(--bg-paper)] shadow-[2px_2px_0px_var(--accent-vermilion)]'
+          : 'bg-[var(--bg-surface)] text-[var(--ink-main)] hover:bg-[var(--bg-subtle)]';
+        const lockTag = t.internal
+          ? `<span class="ml-1 font-mono-code text-[9px] px-1.5 rounded-full border border-current opacity-85">INT</span>`
+          : '';
+        return `
+          <button type="button" data-nav-tab="${escapeHtml(t.id)}" class="nav-trigger shrink-0 px-3 py-2 rounded-xl border-[1.5px] border-[var(--border-ink)] text-xs font-bold flex items-center gap-1.5 cursor-pointer transition ${baseCls}">
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="${t.icon}" />
+            </svg>
+            <span>${escapeHtml(t.label)}</span>
+            ${lockTag}
+          </button>
+        `;
+      }).join('');
+
+      const dock = document.getElementById('mobile-dock');
+      dock.innerHTML = tabs.map(t => {
+        const active = state.activeTab === t.id;
+        const dockCls = active
+          ? 'bg-[var(--accent-vermilion)] text-white'
+          : 'text-[var(--bg-paper)]/80 hover:text-[var(--bg-paper)]';
+        return `
+          <button type="button" data-nav-tab="${escapeHtml(t.id)}" class="nav-trigger flex-1 min-w-[60px] py-1.5 px-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 transition cursor-pointer ${dockCls}">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="${t.icon}" />
+            </svg>
+            <span class="text-[10px] font-bold tracking-tight truncate max-w-[64px]">${escapeHtml(t.short)}</span>
+          </button>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.nav-trigger').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeTab = btn.dataset.navTab;
+          saveState();
+          renderApp();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+    }
+
+    function orgPillClass(org) {
+      if (org === 'OSIS') return 'bg-[var(--accent-vermilion)] text-white';
+      if (org === 'DEWAN AMBALAN') return 'bg-[var(--accent-amber)] text-zinc-950';
+      if (org === 'EVENT') return 'bg-sky-600 text-white';
+      return 'bg-[var(--accent-emerald)] text-white';
+    }
+
+    function statusPillClass(status) {
+      if (status === 'Selesai' || status === 'Sudah Kembali ke Pemilik' || status === 'Disetujui') {
+        return 'bg-[var(--accent-emerald)] text-white';
+      }
+      if (status === 'Diproses') return 'bg-sky-600 text-white';
+      if (status === 'Ditinjau' || status === 'Menunggu Kurasi') return 'bg-[var(--accent-amber)] text-zinc-950';
+      return 'bg-[var(--bg-subtle)] text-[var(--ink-main)]';
+    }
+
+    function emptyIllustration(title, subtitle, ctaLabel = '', ctaTab = '') {
+      return `
+        <div class="arch-card p-6 sm:p-8 text-center flex flex-col items-center justify-center space-y-3">
+          <div class="w-12 h-12 rounded-2xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] flex items-center justify-center text-[var(--ink-muted)]">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-base sm:text-lg">${escapeHtml(title)}</h3>
+            <p class="text-xs sm:text-sm text-[var(--ink-muted)] max-w-md mx-auto mt-1">${escapeHtml(subtitle)}</p>
+          </div>
+          ${ctaLabel && ctaTab ? `
+            <button type="button" data-jump-tab="${escapeHtml(ctaTab)}" class="jump-btn arch-btn px-4 py-2 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">
+              ${escapeHtml(ctaLabel)}
+            </button>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // TAB 1: BERANDA & PENGUMUMAN
+    // =========================================================================
+    function renderBeranda() {
+      const totalAsp = state.aspirations.length;
+      const doneAsp = state.aspirations.filter(a => a.status === 'Selesai').length;
+      const upcomingSch = state.schedules.filter(s => s.date >= todayIso()).length;
+      const approvedMading = state.mading.filter(m => m.status === 'Disetujui').length;
+      const internal = isInternalRole();
+
+      return `
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-7 arch-card p-5 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-3">
+                <span class="tag-stamp bg-[var(--accent-vermilion)] text-white">OSIS</span>
+                <span class="tag-stamp bg-[var(--accent-amber)] text-zinc-950">DEWAN AMBALAN</span>
+                <span class="tag-stamp bg-[var(--accent-emerald)] text-white">RUANG SISWA</span>
+              </div>
+              <h1 class="font-display font-extrabold text-2xl sm:text-4xl leading-[1.08]">
+                Suara Siswa Terdengar, Program Kerja Terukur.
+              </h1>
+              <p class="text-xs sm:text-sm text-[var(--ink-muted)] mt-3 leading-relaxed max-w-2xl">
+                Kanal aspirasi transparan, pelaporan cepat fasilitas, jadwal terpadu (.ics), mading karya & prestasi, serta pusat informasi barang hilang dan temuan sekolah.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t-[1.5px] border-dashed border-[var(--border-ink)] flex flex-wrap gap-2">
+              <button type="button" data-jump-tab="aspirasi" class="jump-btn arch-btn px-4 py-2.5 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">
+                + Kirim Aspirasi / Lapor
+              </button>
+              <button type="button" data-jump-tab="mading" class="jump-btn arch-btn px-4 py-2.5 text-xs bg-[var(--accent-amber)] text-zinc-950 cursor-pointer">
+                Mading Karya & Prestasi
+              </button>
+              <button type="button" data-jump-tab="lostfound" class="jump-btn arch-btn px-4 py-2.5 text-xs bg-[var(--bg-subtle)] text-[var(--ink-main)] cursor-pointer">
+                Lost & Found
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 grid grid-cols-2 gap-3.5">
+            <div class="arch-card p-4 sm:p-5 flex flex-col justify-between">
+              <span class="font-mono-code text-[10px] font-bold uppercase text-[var(--ink-muted)]">ASPIRASI MASUK</span>
+              <div class="font-display font-extrabold text-3xl sm:text-4xl mt-2">${totalAsp}</div>
+              <span class="text-[11px] text-[var(--ink-muted)] mt-1">Total tiket tercatat</span>
+            </div>
+            <div class="arch-card p-4 sm:p-5 flex flex-col justify-between">
+              <span class="font-mono-code text-[10px] font-bold uppercase text-[var(--ink-muted)]">DITINDAKLANJUTI</span>
+              <div class="font-display font-extrabold text-3xl sm:text-4xl mt-2 text-[var(--accent-emerald)]">${doneAsp}</div>
+              <span class="text-[11px] text-[var(--ink-muted)] mt-1">Berstatus selesai</span>
+            </div>
+            <div class="arch-card p-4 sm:p-5 flex flex-col justify-between">
+              <span class="font-mono-code text-[10px] font-bold uppercase text-[var(--ink-muted)]">AGENDA TERDEKAT</span>
+              <div class="font-display font-extrabold text-3xl sm:text-4xl mt-2 text-[var(--accent-vermilion)]">${upcomingSch}</div>
+              <span class="text-[11px] text-[var(--ink-muted)] mt-1">Jadwal aktif mendatang</span>
+            </div>
+            <div class="arch-card p-4 sm:p-5 flex flex-col justify-between">
+              <span class="font-mono-code text-[10px] font-bold uppercase text-[var(--ink-muted)]">KARYA TAYANG</span>
+              <div class="font-display font-extrabold text-3xl sm:text-4xl mt-2 text-[var(--accent-amber)]">${approvedMading}</div>
+              <span class="text-[11px] text-[var(--ink-muted)] mt-1">Mading & prestasi siswa</span>
+            </div>
+          </div>
+        </section>
+
+        ${internal ? `
+          <form id="home-ann-form" class="arch-card p-5 space-y-3 border-[var(--accent-vermilion)]">
+            <div class="flex items-center justify-between">
+              <span class="font-mono-code text-xs font-bold uppercase">+ Terbitkan Pengumuman Resmi (${escapeHtml(state.role)})</span>
+              <span class="tag-stamp bg-[var(--accent-vermilion)] text-white">INTERNAL POST</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <select name="tag" class="arch-input px-3 py-2 text-xs font-bold">
+                <option value="PENTING">[PENTING]</option>
+                <option value="OSIS">[OSIS]</option>
+                <option value="AMBALAN">[AMBALAN]</option>
+                <option value="EVENT">[EVENT]</option>
+              </select>
+              <input type="text" name="title" required placeholder="Judul pengumuman..." class="arch-input sm:col-span-2 px-3.5 py-2 text-sm" />
+            </div>
+            <textarea name="body" rows="2" required placeholder="Isi detail pengumuman resmi..." class="arch-input w-full px-3.5 py-2 text-sm"></textarea>
+            <div class="flex items-center justify-between gap-2">
+              <label class="inline-flex items-center gap-2 text-xs font-bold cursor-pointer">
+                <input type="checkbox" name="pinned" class="w-4 h-4 accent-[#E04F26]" />
+                <span>Sematkan di atas (Pin)</span>
+              </label>
+              <button type="submit" class="arch-btn px-4 py-2 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">
+                Publikasikan
+              </button>
+            </div>
+          </form>
+        ` : ''}
+
+        <section class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="font-display font-extrabold text-xl sm:text-2xl">Papan Pengumuman Resmi</h2>
+              <p class="text-xs text-[var(--ink-muted)]">Informasi terverifikasi dari OSIS, Dewan Ambalan, dan Pembina.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <input id="ann-search-input" type="search" placeholder="Cari pengumuman..." class="arch-input px-3 py-1.5 text-xs w-44 sm:w-52" />
+              <select id="ann-tag-filter" class="arch-input px-3 py-1.5 text-xs font-bold">
+                <option value="ALL">Semua Tag</option>
+                <option value="PENTING">PENTING</option>
+                <option value="OSIS">OSIS</option>
+                <option value="AMBALAN">AMBALAN</option>
+                <option value="EVENT">EVENT</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="ann-feed-wrap">
+            ${renderAnnouncementCards('', 'ALL')}
+          </div>
+        </section>
+
+        <footer class="pt-4 border-t-[1.5px] border-[var(--border-ink)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-[var(--ink-muted)]">
+          <div>
+            <strong class="text-[var(--ink-main)]">SORA</strong> — Sinergi Organisasi & Aspirasi • Dikembangkan oleh <strong class="text-[var(--ink-main)]">Muhammad Nazrul Azhar</strong>.
+          </div>
+          <div class="font-mono-code text-[11px]">Offline PWA • Print PDF • Kode Sync Cepat</div>
+        </footer>
+      `;
+    }
+
+    function renderAnnouncementCards(query, tagFilter) {
+      const q = String(query || '').trim().toLowerCase();
+      const sorted = [...state.announcements].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+      const filtered = sorted.filter(item => {
+        const matchTag = tagFilter === 'ALL' || item.tag === tagFilter;
+        const matchQuery = !q || item.title.toLowerCase().includes(q) || item.body.toLowerCase().includes(q);
+        return matchTag && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        return emptyIllustration(
+          'Belum Ada Pengumuman',
+          'Pengumuman resmi dari OSIS atau Dewan Ambalan akan muncul di sini setelah diterbitkan.'
+        );
+      }
+
+      const tagColor = {
+        PENTING: 'bg-[var(--accent-vermilion)] text-white',
+        OSIS: 'bg-sky-600 text-white',
+        AMBALAN: 'bg-[var(--accent-amber)] text-zinc-950',
+        EVENT: 'bg-[var(--accent-emerald)] text-white'
+      };
+
+      const canDelete = isInternalRole();
+
+      return `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          ${filtered.map(a => `
+            <article class="arch-card arch-lift p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="tag-stamp ${tagColor[a.tag] || 'bg-[var(--bg-subtle)]'}">[${escapeHtml(a.tag)}]</span>
+                    ${a.pinned ? `<span class="tag-stamp bg-[var(--ink-main)] text-[var(--bg-paper)]">PINNED</span>` : ''}
+                  </div>
+                  <span class="font-mono-code text-[10px] text-[var(--ink-muted)]">${escapeHtml(a.date)}</span>
+                </div>
+                <h3 class="font-bold text-base sm:text-lg leading-snug">${escapeHtml(a.title)}</h3>
+                <p class="text-xs sm:text-sm text-[var(--ink-muted)] mt-2 leading-relaxed whitespace-pre-line">${escapeHtml(a.body)}</p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-dashed border-[var(--border-ink)]/35 flex items-center justify-between text-[11px] text-[var(--ink-muted)]">
+                <span>Oleh: <strong>${escapeHtml(a.authorRole || 'Pengurus')}</strong></span>
+                ${canDelete ? `<button type="button" data-del-ann="${escapeHtml(a.id)}" class="del-ann-btn font-bold text-[#E04F26] hover:underline cursor-pointer">Hapus</button>` : ''}
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // TAB 2: ASPIRASI & LAPOR CEPAT
+    // =========================================================================
+    function renderAspirasi() {
+      return `
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="lg:col-span-5 arch-card p-5 sm:p-6 space-y-4">
+            <div>
+              <span class="tag-stamp bg-[var(--accent-vermilion)] text-white">FORMULIR ASPIRASI & LAPOR</span>
+              <h1 class="font-display font-extrabold text-2xl mt-2">Sampaikan Suaramu</h1>
+              <p class="text-xs text-[var(--ink-muted)] mt-1">
+                Kirim ide program kerja, kritik membangun, atau laporan cepat kondisi fasilitas sekolah.
+              </p>
+            </div>
+
+            <form id="asp-create-form" class="space-y-3.5">
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Mode Kiriman</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="cursor-pointer">
+                    <input type="radio" name="mode" value="Saran / Ide Proker" checked class="peer sr-only" />
+                    <div class="p-2.5 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] peer-checked:bg-[var(--ink-main)] peer-checked:text-[var(--bg-paper)] text-xs font-bold text-center transition">
+                      Saran / Ide Proker
+                    </div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="radio" name="mode" value="Lapor Cepat" class="peer sr-only" />
+                    <div class="p-2.5 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] peer-checked:bg-[var(--accent-vermilion)] peer-checked:text-white text-xs font-bold text-center transition">
+                      Lapor Cepat
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Tujuan Organisasi</label>
+                <select name="target" class="arch-input w-full px-3.5 py-2.5 text-xs sm:text-sm font-bold">
+                  <option value="OSIS">OSIS</option>
+                  <option value="DEWAN AMBALAN">Dewan Ambalan</option>
+                  <option value="UMUM / SEKOLAH">Umum / Fasilitas Sekolah</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Judul / Ringkasan</label>
+                <input type="text" name="subject" required placeholder="Contoh: Usulan lomba akustik / Kipas kelas rusak..." class="arch-input w-full px-3.5 py-2 text-sm" />
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Detail Penjelasan</label>
+                <textarea name="detail" rows="3" required placeholder="Jelaskan saran, kritik, atau lokasi laporan secara jelas..." class="arch-input w-full px-3.5 py-2 text-sm"></textarea>
+              </div>
+
+              <div class="p-3 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] space-y-2.5">
+                <label class="flex items-center justify-between gap-2 cursor-pointer">
+                  <span class="text-xs font-bold">Kirim sebagai Anonim (Identitas disembunyikan)</span>
+                  <input id="asp-anon-check" type="checkbox" name="isAnon" checked class="w-4 h-4 accent-[#E04F26] cursor-pointer" />
+                </label>
+                <div id="asp-identity-wrap" class="hidden">
+                  <input type="text" name="sender" placeholder="Nama Lengkap & Kelas (Contoh: Alya / XI-3)" class="arch-input w-full px-3 py-2 text-xs" />
+                </div>
+              </div>
+
+              <button type="submit" class="w-full arch-btn py-3 text-xs sm:text-sm bg-[var(--accent-vermilion)] text-white cursor-pointer">
+                Kirim ke Papan Transparansi
+              </button>
+            </form>
+          </div>
+
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div>
+                <h2 class="font-display font-extrabold text-xl sm:text-2xl">Papan Transparansi Aspirasi</h2>
+                <p class="text-xs text-[var(--ink-muted)]">Pantau progres tindak lanjut dan dukung aspirasi prioritas.</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <select id="asp-filter-org" class="arch-input px-3 py-1.5 text-xs font-bold">
+                  <option value="ALL">Semua Tujuan</option>
+                  <option value="OSIS">OSIS</option>
+                  <option value="DEWAN AMBALAN">Dewan Ambalan</option>
+                  <option value="UMUM / SEKOLAH">Umum / Sekolah</option>
+                </select>
+                <select id="asp-filter-status" class="arch-input px-3 py-1.5 text-xs font-bold">
+                  <option value="ALL">Semua Status</option>
+                  <option value="Diterima">Diterima</option>
+                  <option value="Ditinjau">Ditinjau</option>
+                  <option value="Diproses">Diproses</option>
+                  <option value="Selesai">Selesai</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="asp-board-wrap" class="space-y-3.5">
+              ${renderAspirationBoard('ALL', 'ALL')}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderAspirationBoard(orgFilter, statusFilter) {
+      const sorted = [...state.aspirations].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+      const items = sorted.filter(a => {
+        const okOrg = orgFilter === 'ALL' || a.target === orgFilter;
+        const okSt = statusFilter === 'ALL' || a.status === statusFilter;
+        return okOrg && okSt;
+      });
+
+      if (items.length === 0) {
+        return emptyIllustration(
+          'Belum Ada Aspirasi Tercatat',
+          'Gunakan formulir di samping untuk mengirimkan saran, ide kegiatan, atau laporan cepat pertama.'
+        );
+      }
+
+      return items.map(a => {
+        const alreadyVoted = state.upvotedIds.includes(a.id);
+        return `
+          <article class="arch-card p-4 sm:p-5 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="font-mono-code text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--ink-main)] text-[var(--bg-paper)]">#${escapeHtml(a.ticketCode)}</span>
+                <span class="tag-stamp ${orgPillClass(a.target)}">${escapeHtml(a.target)}</span>
+                <span class="tag-stamp bg-[var(--bg-subtle)] text-[var(--ink-main)]">${escapeHtml(a.mode)}</span>
+                ${a.pinned ? `<span class="tag-stamp bg-[var(--accent-amber)] text-zinc-950">PRIORITAS</span>` : ''}
+              </div>
+              <span class="tag-stamp ${statusPillClass(a.status)}">${escapeHtml(a.status)}</span>
+            </div>
+
+            <div>
+              <h3 class="font-bold text-base sm:text-lg leading-snug">${escapeHtml(a.subject)}</h3>
+              <p class="text-xs sm:text-sm text-[var(--ink-muted)] mt-1 leading-relaxed whitespace-pre-line">${escapeHtml(a.detail)}</p>
+            </div>
+
+            <div class="p-3 rounded-xl border border-[var(--border-ink)]/35 bg-[var(--bg-subtle)] text-xs">
+              <span class="font-mono-code font-bold uppercase text-[10px] block mb-0.5">Tanggapan Resmi Pengurus:</span>
+              <span class="text-[var(--ink-main)]">${escapeHtml(a.reply || 'Tiket telah masuk dan menunggu peninjauan pengurus.')}</span>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <span class="text-[11px] text-[var(--ink-muted)]">
+                Pengirim: <strong>${escapeHtml(a.isAnon ? 'Anonim' : (a.sender || 'Siswa'))}</strong> • <span class="font-mono-code">${escapeHtml(a.createdAt)}</span>
+              </span>
+              <button type="button" data-upvote-id="${escapeHtml(a.id)}" class="asp-upvote-btn arch-btn px-3 py-1.5 text-xs flex items-center gap-1.5 cursor-pointer ${alreadyVoted ? 'bg-[var(--accent-amber)] text-zinc-950' : 'bg-[var(--bg-surface)] text-[var(--ink-main)]'}">
+                <span>▲ Dukung</span>
+                <span class="font-mono-code font-bold">${a.upvotes}</span>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // TAB 3: JADWAL KEGIATAN & VOTING CEPAT
+    // =========================================================================
+    function renderJadwalVoting() {
+      const canManage = isInternalRole();
+
+      return `
+        <section class="space-y-8">
+          <!-- Schedule Section -->
+          <div class="space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+              <div>
+                <h1 class="font-display font-extrabold text-2xl sm:text-3xl">Jadwal & Agenda Kegiatan</h1>
+                <p class="text-xs sm:text-sm text-[var(--ink-muted)] mt-1">
+                  Kalender terpadu kegiatan OSIS, latihan rutin Dewan Ambalan, dan unduhan kalender (.ics).
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-1.5" id="sch-tabs">
+                <button type="button" data-sch-cat="ALL" class="sch-cat-btn arch-btn px-3 py-1.5 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">Semua</button>
+                <button type="button" data-sch-cat="OSIS" class="sch-cat-btn arch-btn px-3 py-1.5 text-xs bg-[var(--bg-surface)] text-[var(--ink-main)] cursor-pointer">OSIS</button>
+                <button type="button" data-sch-cat="DEWAN AMBALAN" class="sch-cat-btn arch-btn px-3 py-1.5 text-xs bg-[var(--bg-surface)] text-[var(--ink-main)] cursor-pointer">Dewan Ambalan</button>
+                <button type="button" data-sch-cat="UMUM" class="sch-cat-btn arch-btn px-3 py-1.5 text-xs bg-[var(--bg-surface)] text-[var(--ink-main)] cursor-pointer">Umum</button>
+              </div>
+            </div>
+
+            ${canManage ? `
+              <form id="schedule-add-form" class="arch-card p-5 space-y-3 border-[var(--accent-emerald)]">
+                <div class="font-mono-code text-xs font-bold uppercase">+ Tambah Agenda Kegiatan (${escapeHtml(state.role)})</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                  <input type="text" name="title" required placeholder="Nama kegiatan / latihan..." class="arch-input px-3.5 py-2 text-sm" />
+                  <select name="org" class="arch-input px-3.5 py-2 text-xs font-bold">
+                    <option value="OSIS" ${state.role === 'OSIS' ? 'selected' : ''}>OSIS</option>
+                    <option value="DEWAN AMBALAN" ${state.role === 'DEWAN AMBALAN' ? 'selected' : ''}>Dewan Ambalan</option>
+                    <option value="UMUM">Umum</option>
+                  </select>
+                  <input type="date" name="date" required class="arch-input px-3.5 py-2 text-sm" />
+                  <input type="text" name="time" required placeholder="Jam (mis. 15:30 - 17:00)" class="arch-input px-3.5 py-2 text-sm" />
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <input type="text" name="location" required placeholder="Lokasi (mis. Lapangan Utama / Sanggar)" class="arch-input px-3.5 py-2 text-sm" />
+                  <input type="text" name="gear" placeholder="Dresscode / Perlengkapan (mis. Seragam Pramuka Lengkap)" class="arch-input px-3.5 py-2 text-sm" />
+                </div>
+                <div class="flex justify-end">
+                  <button type="submit" class="arch-btn px-4 py-2 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">Simpan ke Jadwal</button>
+                </div>
+              </form>
+            ` : ''}
+
+            <div id="schedule-grid-wrap">
+              ${renderScheduleGrid('ALL')}
+            </div>
+          </div>
+
+          <!-- Polling / Voting Section -->
+          <div class="pt-4 border-t-[1.5px] border-[var(--border-ink)] space-y-4">
+            <div>
+              <span class="tag-stamp bg-[var(--accent-amber)] text-zinc-950">JAJAK PENDAPAT</span>
+              <h2 class="font-display font-extrabold text-xl sm:text-2xl mt-1.5">Voting Siswa</h2>
+              <p class="text-xs text-[var(--ink-muted)] mt-0.5">Tentukan pilihan kegiatan, tema acara, atau kebijakan bersama.</p>
+            </div>
+
+            ${canManage ? `
+              <form id="poll-create-form" class="arch-card p-4 space-y-2.5 border-[var(--accent-amber)] max-w-2xl">
+                <div class="font-mono-code text-[11px] font-bold uppercase">+ Buat Polling Baru</div>
+                <input type="text" name="question" required placeholder="Pertanyaan voting..." class="arch-input w-full px-3 py-2 text-xs sm:text-sm" />
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <input type="text" name="opt1" required placeholder="Pilihan 1" class="arch-input px-3 py-1.5 text-xs" />
+                  <input type="text" name="opt2" required placeholder="Pilihan 2" class="arch-input px-3 py-1.5 text-xs" />
+                  <input type="text" name="opt3" placeholder="Pilihan 3 (opsional)" class="arch-input px-3 py-1.5 text-xs" />
+                </div>
+                <div class="flex justify-end">
+                  <button type="submit" class="arch-btn px-4 py-2 text-xs bg-[var(--accent-amber)] text-zinc-950 cursor-pointer">Terbitkan Polling</button>
+                </div>
+              </form>
+            ` : ''}
+
+            ${state.polls.length === 0
+              ? emptyIllustration('Belum Ada Polling Aktif', 'Polling dari OSIS atau Dewan Ambalan akan muncul di sini saat dibuka.')
+              : `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  ${state.polls.map(poll => {
+                    const totalVotes = poll.options.reduce((acc, o) => acc + o.votes, 0);
+                    const pickedId = state.votedPolls[poll.id] || null;
+                    return `
+                      <article class="arch-card p-5 space-y-3.5">
+                        <div class="flex items-center justify-between gap-2">
+                          <span class="tag-stamp bg-[var(--ink-main)] text-[var(--bg-paper)]">POLLING</span>
+                          <div class="flex items-center gap-2">
+                            <span class="font-mono-code text-[11px] text-[var(--ink-muted)]">${totalVotes} suara</span>
+                            ${canManage ? `<button type="button" data-del-poll="${escapeHtml(poll.id)}" class="del-poll-btn text-[11px] font-bold text-[#E04F26] hover:underline cursor-pointer">Hapus</button>` : ''}
+                          </div>
+                        </div>
+                        <h3 class="font-bold text-base leading-snug">${escapeHtml(poll.question)}</h3>
+                        <div class="space-y-2">
+                          ${poll.options.map(opt => {
+                            const pct = totalVotes > 0 ? Math.round((opt.votes / totalVotes) * 100) : 0;
+                            const isSelected = pickedId === opt.id;
+                            return `
+                              <button type="button" data-poll-id="${escapeHtml(poll.id)}" data-opt-id="${escapeHtml(opt.id)}" class="vote-opt-btn w-full text-left p-3 rounded-xl border-[1.5px] border-[var(--border-ink)] ${isSelected ? 'bg-[var(--accent-amber)]/25' : 'bg-[var(--bg-subtle)] hover:bg-[var(--bg-surface)]'} transition cursor-pointer">
+                                <div class="flex items-center justify-between text-xs font-bold">
+                                  <span>${escapeHtml(opt.label)} ${isSelected ? '✓' : ''}</span>
+                                  <span class="font-mono-code">${pct}% (${opt.votes})</span>
+                                </div>
+                                <div class="w-full h-2 rounded-full bg-[var(--bg-paper)] border border-[var(--border-ink)] mt-1.5 overflow-hidden">
+                                  <div class="h-full bg-[var(--accent-vermilion)] transition-all duration-300" style="width: ${pct}%"></div>
+                                </div>
+                              </button>
+                            `;
+                          }).join('')}
+                        </div>
+                      </article>
+                    `;
+                  }).join('')}
+                </div>`
+            }
+          </div>
+        </section>
+      `;
+    }
+
+    function renderScheduleGrid(cat) {
+      const sorted = [...state.schedules].sort((a, b) => String(a.date).localeCompare(String(b.date)));
+      const list = cat === 'ALL' ? sorted : sorted.filter(s => s.org === cat);
+
+      if (list.length === 0) {
+        return emptyIllustration(
+          'Belum Ada Jadwal Kegiatan',
+          'Agenda kegiatan OSIS, latihan Ambalan, maupun acara sekolah akan tampil di sini setelah ditambahkan.'
+        );
+      }
+
+      const canDelete = isInternalRole();
+
+      return `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          ${list.map(s => {
+            const cd = getCountdownMeta(s.date);
+            return `
+              <article class="arch-card arch-lift p-5 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-3">
+                    <span class="tag-stamp ${orgPillClass(s.org)}">${escapeHtml(s.org)}</span>
+                    <span class="tag-stamp ${cd.cls}">${escapeHtml(cd.label)}</span>
+                  </div>
+                  <h3 class="font-bold text-base sm:text-lg leading-snug">${escapeHtml(s.title)}</h3>
+                  <div class="mt-3 space-y-1 text-xs text-[var(--ink-muted)]">
+                    <div class="font-mono-code text-[var(--ink-main)] font-bold">${escapeHtml(formatIndoDate(s.date))} • ${escapeHtml(s.time)}</div>
+                    <div>Lokasi: <strong class="text-[var(--ink-main)]">${escapeHtml(s.location)}</strong></div>
+                    ${s.gear ? `<div>Perlengkapan: <span class="text-[var(--ink-main)]">${escapeHtml(s.gear)}</span></div>` : ''}
+                  </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-dashed border-[var(--border-ink)]/35 flex items-center justify-between gap-2">
+                  <button type="button" data-ics-id="${escapeHtml(s.id)}" class="ics-dl-btn arch-btn px-3 py-1.5 text-[11px] bg-[var(--bg-subtle)] text-[var(--ink-main)] flex items-center gap-1.5 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Simpan Kalender (.ics)</span>
+                  </button>
+                  ${canDelete ? `<button type="button" data-del-sch="${escapeHtml(s.id)}" class="del-sch-btn text-xs font-bold text-[#E04F26] hover:underline cursor-pointer">Hapus</button>` : ''}
+                </div>
+              </article>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function exportCalendarIcs(ev) {
+      const compactDate = String(ev.date || '').replace(/-/g, '');
+      const dtStart = /^\d{8}$/.test(compactDate) ? `${compactDate}T080000` : '20261124T080000';
+      const dtEnd = /^\d{8}$/.test(compactDate) ? `${compactDate}T100000` : '20261124T100000';
+      const clean = txt => String(txt || '').replace(/[\r\n,;]/g, ' ');
+
+      const lines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//SORA//Sinergi Organisasi & Aspirasi//ID',
+        'BEGIN:VEVENT',
+        `UID:${ev.id || Date.now()}@sora.school`,
+        `DTSTAMP:${dtStart}`,
+        `DTSTART:${dtStart}`,
+        `DTEND:${dtEnd}`,
+        `SUMMARY:${clean(ev.title)} (${clean(ev.org)})`,
+        `LOCATION:${clean(ev.location)}`,
+        `DESCRIPTION:${clean(ev.time)} - ${clean(ev.gear)}`,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      const blob = new Blob([lines], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `agenda-${ev.id || 'sora'}.ics`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('File kalender (.ics) berhasil diunduh.', 'success');
+    }
+
+    // =========================================================================
+    // TAB 4: MADING KARYA & GALERI PRESTASI (WITH PENGURUS CURATION QUEUE)
+    // =========================================================================
+    function renderMadingTab() {
+      const approvedList = state.mading.filter(m => m.status === 'Disetujui');
+      const pendingCount = state.mading.filter(m => m.status === 'Menunggu Kurasi').length;
+
+      return `
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Student Submission Form -->
+          <div class="lg:col-span-5 arch-card p-5 sm:p-6 space-y-4">
+            <div>
+              <span class="tag-stamp bg-[var(--accent-emerald)] text-white">RUANG KREATIF SISWA</span>
+              <h1 class="font-display font-extrabold text-2xl mt-2">Kirim Karya & Prestasi</h1>
+              <p class="text-xs text-[var(--ink-muted)] mt-1">
+                Kirim poster, tulisan, dokumentasi lomba, atau prestasi kelas/ambalan. Kiriman masuk ke antrean <strong>Kurasi Pengurus</strong> sebelum tayang.
+              </p>
+            </div>
+
+            <form id="mading-submit-form" class="space-y-3">
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Kategori</label>
+                <select name="category" class="arch-input w-full px-3.5 py-2 text-xs sm:text-sm font-bold">
+                  <option value="PRESTASI">Prestasi Lomba / Penghargaan</option>
+                  <option value="POSTER & DESAIN">Poster & Desain Grafis</option>
+                  <option value="TULISAN & PUISI">Tulisan, Artikel & Puisi</option>
+                  <option value="DOKUMENTASI">Dokumentasi Kegiatan</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Judul Karya / Prestasi</label>
+                <input type="text" name="title" required placeholder="Contoh: Juara 1 Lomba Pionering Tingkat Kota..." class="arch-input w-full px-3.5 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Nama Kreator / Tim / Sangga</label>
+                <input type="text" name="creator" required placeholder="Nama siswa, kelas, atau sangga..." class="arch-input w-full px-3.5 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Tautan Media / Drive / Gambar (Opsional)</label>
+                <input type="url" name="mediaUrl" placeholder="https://..." class="arch-input w-full px-3.5 py-2 text-xs" />
+              </div>
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Deskripsi / Karya</label>
+                <textarea name="story" rows="3" required placeholder="Tuliskan cerita pencapaian, puisi, atau keterangan karya..." class="arch-input w-full px-3.5 py-2 text-sm"></textarea>
+              </div>
+              <button type="submit" class="w-full arch-btn py-2.5 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">
+                Kirim ke Antrean Kurasi
+              </button>
+            </form>
+
+            ${pendingCount > 0 ? `
+              <div class="p-3 rounded-xl border border-[var(--border-ink)] bg-[var(--bg-subtle)] text-xs flex items-center justify-between">
+                <span>Antrean menunggu kurasi pengurus:</span>
+                <span class="font-mono-code font-bold px-2 py-0.5 rounded bg-[var(--accent-amber)] text-zinc-950">${pendingCount} item</span>
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- Curated Public Gallery -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="font-display font-extrabold text-xl sm:text-2xl">Galeri Mading Digital</h2>
+                <p class="text-xs text-[var(--ink-muted)]">Karya dan prestasi pilihan yang telah terverifikasi pengurus.</p>
+              </div>
+              <span class="tag-stamp bg-[var(--ink-main)] text-[var(--bg-paper)]">${approvedList.length} TAYANG</span>
+            </div>
+
+            ${approvedList.length === 0
+              ? emptyIllustration('Belum Ada Karya Tayang', 'Kirim karya atau prestasi lewat form di samping. Pengurus dapat menyetujuinya di tab Moderasi & Kurasi.')
+              : `<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  ${approvedList.map(m => {
+                    const applauded = state.applaudedMadingIds.includes(m.id);
+                    return `
+                      <article class="arch-card arch-lift p-5 flex flex-col justify-between space-y-3">
+                        <div>
+                          <div class="flex items-center justify-between gap-2 mb-2.5">
+                            <span class="tag-stamp bg-[var(--accent-emerald)] text-white">${escapeHtml(m.category)}</span>
+                            <span class="font-mono-code text-[10px] text-[var(--ink-muted)]">${escapeHtml(m.date)}</span>
+                          </div>
+                          <h3 class="font-bold text-base leading-snug">${escapeHtml(m.title)}</h3>
+                          <p class="text-xs text-[var(--ink-muted)] mt-2 leading-relaxed whitespace-pre-line">${escapeHtml(m.story)}</p>
+                          ${m.mediaUrl ? `
+                            <a href="${escapeHtml(m.mediaUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 mt-2.5 text-xs font-bold text-[#E04F26] dark:text-[#FF6B42] underline">
+                              Buka Tautan Lampiran ↗
+                            </a>
+                          ` : ''}
+                        </div>
+                        <div class="pt-3 border-t border-dashed border-[var(--border-ink)]/35 flex items-center justify-between gap-2">
+                          <span class="text-[11px] font-bold truncate">${escapeHtml(m.creator)}</span>
+                          <button type="button" data-applaud-id="${escapeHtml(m.id)}" class="mading-applaud-btn arch-btn px-2.5 py-1 text-[11px] flex items-center gap-1 cursor-pointer ${applauded ? 'bg-[var(--accent-amber)] text-zinc-950' : 'bg-[var(--bg-subtle)] text-[var(--ink-main)]'}">
+                            <span>★ Apresiasi</span>
+                            <span class="font-mono-code font-bold">${m.applause || 0}</span>
+                          </button>
+                        </div>
+                      </article>
+                    `;
+                  }).join('')}
+                </div>`
+            }
+          </div>
+        </section>
+      `;
+    }
+
+    // =========================================================================
+    // TAB 5: LOST & FOUND (BARANG HILANG & TEMUAN)
+    // =========================================================================
+    function renderLostFoundTab() {
+      return `
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="lg:col-span-5 arch-card p-5 sm:p-6 space-y-4">
+            <div>
+              <span class="tag-stamp bg-[var(--accent-amber)] text-zinc-950">POS INFORMASI SEKOLAH</span>
+              <h1 class="font-display font-extrabold text-2xl mt-2">Lost & Found</h1>
+              <p class="text-xs text-[var(--ink-muted)] mt-1">
+                Laporkan barang yang hilang atau ditemukan di area sekolah agar segera kembali ke pemiliknya.
+              </p>
+            </div>
+
+            <form id="lf-create-form" class="space-y-3">
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Jenis Laporan</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="cursor-pointer">
+                    <input type="radio" name="kind" value="Barang Hilang" checked class="peer sr-only" />
+                    <div class="p-2.5 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] peer-checked:bg-[var(--accent-vermilion)] peer-checked:text-white text-xs font-bold text-center transition">
+                      Barang Hilang
+                    </div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="radio" name="kind" value="Barang Temuan" class="peer sr-only" />
+                    <div class="p-2.5 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] peer-checked:bg-[var(--accent-emerald)] peer-checked:text-white text-xs font-bold text-center transition">
+                      Barang Temuan
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Nama & Ciri Barang</label>
+                <input type="text" name="item" required placeholder="Contoh: Tumbler hitam stiker pramuka / Kunci motor..." class="arch-input w-full px-3.5 py-2 text-sm" />
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Lokasi Terakhir / Ditemukan</label>
+                <input type="text" name="location" required placeholder="Contoh: Kantin Blok B / Masjid / Lapangan Basket..." class="arch-input w-full px-3.5 py-2 text-sm" />
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Kontak / Titik Pengambilan</label>
+                <input type="text" name="contact" required placeholder="Contoh: Pos Piket OSIS / Kelas X-2 / WA 08xx..." class="arch-input w-full px-3.5 py-2 text-xs" />
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold uppercase mb-1">Keterangan Tambahan</label>
+                <textarea name="detail" rows="2" placeholder="Waktu kejadian atau detail khusus..." class="arch-input w-full px-3.5 py-2 text-xs"></textarea>
+              </div>
+
+              <button type="submit" class="w-full arch-btn py-2.5 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">
+                Terbitkan Laporan Barang
+              </button>
+            </form>
+          </div>
+
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 class="font-display font-extrabold text-xl sm:text-2xl">Daftar Barang Hilang & Temuan</h2>
+                <p class="text-xs text-[var(--ink-muted)]">Verifikasi pengembalian barang dilakukan oleh pengurus piket.</p>
+              </div>
+              <div class="flex gap-2">
+                <select id="lf-kind-filter" class="arch-input px-3 py-1.5 text-xs font-bold">
+                  <option value="ALL">Semua Jenis</option>
+                  <option value="Barang Hilang">Barang Hilang</option>
+                  <option value="Barang Temuan">Barang Temuan</option>
+                </select>
+                <select id="lf-status-filter" class="arch-input px-3 py-1.5 text-xs font-bold">
+                  <option value="ALL">Semua Status</option>
+                  <option value="Belum Diambil">Belum Diambil</option>
+                  <option value="Sudah Kembali ke Pemilik">Sudah Kembali</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="lf-board-wrap" class="space-y-3.5">
+              ${renderLostFoundBoard('ALL', 'ALL')}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderLostFoundBoard(kindFilter, statusFilter) {
+      const list = state.lostFound.filter(x => {
+        const okKind = kindFilter === 'ALL' || x.kind === kindFilter;
+        const okSt = statusFilter === 'ALL' || x.status === statusFilter;
+        return okKind && okSt;
+      });
+
+      if (list.length === 0) {
+        return emptyIllustration(
+          'Belum Ada Laporan Lost & Found',
+          'Laporan barang hilang maupun barang temuan di sekolah akan muncul di sini.'
+        );
+      }
+
+      const canVerify = isInternalRole();
+
+      return list.map(lf => `
+        <article class="arch-card p-4 sm:p-5 space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5">
+              <span class="tag-stamp ${lf.kind === 'Barang Hilang' ? 'bg-[var(--accent-vermilion)] text-white' : 'bg-sky-600 text-white'}">${escapeHtml(lf.kind)}</span>
+              <span class="font-mono-code text-[10px] text-[var(--ink-muted)]">${escapeHtml(lf.date)}</span>
+            </div>
+            <span class="tag-stamp ${statusPillClass(lf.status)}">${escapeHtml(lf.status)}</span>
+          </div>
+
+          <h3 class="font-bold text-base sm:text-lg">${escapeHtml(lf.item)}</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[var(--ink-muted)]">
+            <div>Lokasi: <strong class="text-[var(--ink-main)]">${escapeHtml(lf.location)}</strong></div>
+            <div>Kontak / Pos: <strong class="text-[var(--ink-main)]">${escapeHtml(lf.contact)}</strong></div>
+          </div>
+          ${lf.detail ? `<p class="text-xs text-[var(--ink-muted)]">${escapeHtml(lf.detail)}</p>` : ''}
+
+          ${canVerify ? `
+            <div class="pt-2.5 border-t border-dashed border-[var(--border-ink)]/35 flex flex-wrap items-center justify-between gap-2">
+              <button type="button" data-toggle-lf="${escapeHtml(lf.id)}" class="toggle-lf-btn arch-btn px-3 py-1.5 text-[11px] bg-[var(--accent-emerald)] text-white cursor-pointer">
+                ${lf.status === 'Belum Diambil' ? '✓ Verifikasi Sudah Kembali' : '↺ Tandai Belum Diambil'}
+              </button>
+              <button type="button" data-del-lf="${escapeHtml(lf.id)}" class="del-lf-btn text-xs font-bold text-[#E04F26] hover:underline cursor-pointer">Hapus</button>
+            </div>
+          ` : ''}
+        </article>
+      `).join('');
+    }
+
+    // =========================================================================
+    // INTERNAL TABS (NEVER RENDERED WHEN role === 'SISWA')
+    // =========================================================================
+
+    // INTERNAL 1: MODERASI ASPIRASI & KURASI MADING
+    function renderModerasiTab() {
+      if (!isInternalRole()) return '';
+
+      const pendingMading = state.mading.filter(m => m.status === 'Menunggu Kurasi');
+
+      return `
+        <section class="space-y-6">
+          <div class="arch-card p-5 sm:p-6 bg-[var(--ink-main)] text-[var(--bg-paper)]">
+            <span class="tag-stamp bg-[var(--accent-vermilion)] text-white">RUANG INTERNAL • ${escapeHtml(state.role)}</span>
+            <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1.5">Moderasi Aspirasi & Kurasi Mading</h1>
+            <p class="text-xs opacity-80 mt-1">Tindak lanjuti tiket aspirasi siswa serta kurasi kiriman karya & prestasi sebelum tampil publik.</p>
+          </div>
+
+          <!-- Mading Curation Queue -->
+          <div class="arch-card p-5 space-y-3 border-[var(--accent-amber)]">
+            <div class="flex items-center justify-between">
+              <h2 class="font-display font-bold text-lg">Antrean Kurasi Mading Karya (${pendingMading.length})</h2>
+              <span class="tag-stamp bg-[var(--accent-amber)] text-zinc-950">MODERASI KARYA</span>
+            </div>
+            ${pendingMading.length === 0
+              ? `<p class="text-xs text-[var(--ink-muted)]">Tidak ada kiriman karya yang menunggu kurasi saat ini.</p>`
+              : `<div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  ${pendingMading.map(m => `
+                    <div class="p-4 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] space-y-2">
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="tag-stamp bg-[var(--bg-surface)]">${escapeHtml(m.category)}</span>
+                        <span class="font-mono-code text-[10px] text-[var(--ink-muted)]">${escapeHtml(m.date)}</span>
+                      </div>
+                      <div class="font-bold text-sm">${escapeHtml(m.title)}</div>
+                      <div class="text-xs text-[var(--ink-muted)]">Oleh: <strong>${escapeHtml(m.creator)}</strong></div>
+                      <p class="text-xs text-[var(--ink-main)] whitespace-pre-line">${escapeHtml(m.story)}</p>
+                      ${m.mediaUrl ? `<a href="${escapeHtml(m.mediaUrl)}" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-[#E04F26] underline block">Cek Lampiran ↗</a>` : ''}
+                      <div class="flex items-center gap-2 pt-2">
+                        <button type="button" data-approve-mading="${escapeHtml(m.id)}" class="approve-mading-btn arch-btn px-3 py-1.5 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">
+                          ✓ Setujui & Tayangkan
+                        </button>
+                        <button type="button" data-reject-mading="${escapeHtml(m.id)}" class="reject-mading-btn arch-btn px-3 py-1.5 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">
+                          Tolak / Hapus
+                        </button>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>`
+            }
+          </div>
+
+          <!-- Aspirations Moderation Inbox -->
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h2 class="font-display font-extrabold text-xl">Kotak Masuk Aspirasi & Lapor Cepat</h2>
+              <div class="flex flex-wrap gap-2">
+                <select id="mod-org-filter" class="arch-input px-3 py-1.5 text-xs font-bold">
+                  <option value="ALL">Semua Organisasi</option>
+                  <option value="OSIS">OSIS</option>
+                  <option value="DEWAN AMBALAN">Dewan Ambalan</option>
+                  <option value="UMUM / SEKOLAH">Umum / Sekolah</option>
+                </select>
+                <select id="mod-status-filter" class="arch-input px-3 py-1.5 text-xs font-bold">
+                  <option value="ALL">Semua Status</option>
+                  <option value="Diterima">Diterima</option>
+                  <option value="Ditinjau">Ditinjau</option>
+                  <option value="Diproses">Diproses</option>
+                  <option value="Selesai">Selesai</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="mod-inbox-wrap" class="space-y-4">
+              ${renderModerasiList('ALL', 'ALL')}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderModerasiList(orgFilter, statusFilter) {
+      const list = state.aspirations.filter(a => {
+        const okOrg = orgFilter === 'ALL' || a.target === orgFilter;
+        const okSt = statusFilter === 'ALL' || a.status === statusFilter;
+        return okOrg && okSt;
+      });
+
+      if (list.length === 0) {
+        return emptyIllustration('Kotak Masuk Moderasi Kosong', 'Belum ada tiket aspirasi atau laporan yang sesuai dengan filter saat ini.');
+      }
+
+      return list.map(a => `
+        <article data-ticket-id="${escapeHtml(a.id)}" class="arch-card p-5 space-y-3.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="font-mono-code text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--ink-main)] text-[var(--bg-paper)]">#${escapeHtml(a.ticketCode)}</span>
+              <span class="tag-stamp ${orgPillClass(a.target)}">${escapeHtml(a.target)}</span>
+              <span class="tag-stamp bg-[var(--bg-subtle)]">${escapeHtml(a.mode)}</span>
+              <span class="text-xs text-[var(--ink-muted)]">dari <strong>${escapeHtml(a.isAnon ? 'Anonim' : a.sender)}</strong></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" data-pin-asp="${escapeHtml(a.id)}" class="pin-asp-btn arch-btn px-2.5 py-1 text-[11px] ${a.pinned ? 'bg-[var(--accent-amber)] text-zinc-950' : 'bg-[var(--bg-subtle)]'} cursor-pointer">
+                ${a.pinned ? '★ Dipin' : '☆ Pin'}
+              </button>
+              <button type="button" data-del-asp="${escapeHtml(a.id)}" class="del-asp-btn arch-btn px-2.5 py-1 text-[11px] bg-[var(--accent-vermilion)] text-white cursor-pointer">
+                Hapus
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-base">${escapeHtml(a.subject)}</h3>
+            <p class="text-xs text-[var(--ink-muted)] mt-1 whitespace-pre-line">${escapeHtml(a.detail)}</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 pt-2 border-t border-dashed border-[var(--border-ink)]/35">
+            <select class="mod-status-sel arch-input sm:col-span-3 px-3 py-2 text-xs font-bold">
+              <option value="Diterima" ${a.status === 'Diterima' ? 'selected' : ''}>Diterima</option>
+              <option value="Ditinjau" ${a.status === 'Ditinjau' ? 'selected' : ''}>Ditinjau</option>
+              <option value="Diproses" ${a.status === 'Diproses' ? 'selected' : ''}>Diproses</option>
+              <option value="Selesai" ${a.status === 'Selesai' ? 'selected' : ''}>Selesai</option>
+            </select>
+            <input type="text" class="mod-reply-inp arch-input sm:col-span-7 px-3 py-2 text-xs" value="${escapeHtml(a.reply || '')}" placeholder="Tulis tanggapan resmi yang tampil ke siswa..." />
+            <button type="button" class="mod-save-btn arch-btn sm:col-span-2 px-3 py-2 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">
+              Simpan
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // INTERNAL 2: LIVE EVENT MODE (HARI H RUNDOWN & BULK TIME SHIFT)
+    function renderLiveEventTab() {
+      if (!isInternalRole()) return '';
+
+      const le = state.liveEvent;
+
+      return `
+        <section class="space-y-6">
+          <div class="arch-card p-5 sm:p-6 bg-[var(--accent-vermilion)] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="tag-stamp bg-zinc-950 text-white">LIVE EVENT MODE • ${escapeHtml(state.role)}</span>
+              <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1.5">
+                ${escapeHtml(le.eventName || 'Papan Komando Hari-H Event')}
+              </h1>
+              <p class="text-xs text-orange-100 mt-1">
+                ${le.eventDate ? `Tanggal Pelaksanaan: ${escapeHtml(formatIndoDate(le.eventDate))} • ` : ''}Kelola rundown berjalan, PIC pos, dan geser waktu otomatis jika acara mundur/maju.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2 shrink-0">
+              <button type="button" data-shift-min="-15" class="shift-rundown-btn arch-btn px-3.5 py-2 text-xs bg-white text-zinc-950 cursor-pointer">
+                -15 Menit
+              </button>
+              <button type="button" data-shift-min="15" class="shift-rundown-btn arch-btn px-3.5 py-2 text-xs bg-zinc-950 text-white cursor-pointer">
+                +15 Menit (Mundur)
+              </button>
+            </div>
+          </div>
+
+          <!-- Event Header & Add Rundown Session Form -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <form id="live-event-meta-form" class="lg:col-span-5 arch-card p-5 space-y-3">
+              <div class="font-mono-code text-xs font-bold uppercase">Identitas Kegiatan Hari-H</div>
+              <input type="text" name="eventName" required value="${escapeHtml(le.eventName)}" placeholder="Nama Acara (mis. Classmeeting / Perkemahan Sabtu Minggu)" class="arch-input w-full px-3.5 py-2 text-sm" />
+              <input type="date" name="eventDate" required value="${escapeHtml(le.eventDate || todayIso())}" class="arch-input w-full px-3.5 py-2 text-xs" />
+              <button type="submit" class="w-full arch-btn py-2 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">
+                Simpan Info Acara
+              </button>
+            </form>
+
+            <form id="live-session-add-form" class="lg:col-span-7 arch-card p-5 space-y-3">
+              <div class="font-mono-code text-xs font-bold uppercase">+ Tambah Sesi Rundown</div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <input type="text" name="time" required placeholder="Jam (mis. 08:00 - 08:45)" class="arch-input font-mono-code px-3 py-2 text-xs font-bold" />
+                <input type="text" name="title" required placeholder="Nama Sesi / Mata Acara..." class="arch-input sm:col-span-2 px-3 py-2 text-sm" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <input type="text" name="pic" required placeholder="PIC / Koordinator Pos..." class="arch-input sm:col-span-2 px-3 py-2 text-xs" />
+                <button type="submit" class="arch-btn py-2 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">+ Tambah Sesi</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Active Rundown Timeline -->
+          <div class="space-y-3">
+            <h2 class="font-display font-extrabold text-xl">Timeline Rundown Lapangan</h2>
+            ${le.sessions.length === 0
+              ? emptyIllustration('Belum Ada Sesi Rundown', 'Tambahkan susunan acara hari-H di atas agar seluruh panitia memiliki patokan waktu yang seragam.')
+              : le.sessions.map((ses, idx) => `
+                  <div class="arch-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${ses.active ? 'border-[var(--accent-vermilion)] bg-[var(--accent-vermilion)]/10' : ''}">
+                    <div class="flex flex-wrap items-center gap-3">
+                      <span class="font-mono-code text-xs font-bold px-3 py-1.5 rounded-xl border-[1.5px] border-[var(--border-ink)] ${ses.active ? 'bg-[var(--accent-vermilion)] text-white' : 'bg-[var(--bg-subtle)]'}">
+                        ${escapeHtml(ses.time)}
+                      </span>
+                      <div>
+                        <div class="flex items-center gap-2">
+                          <span class="font-bold text-base">${idx + 1}. ${escapeHtml(ses.title)}</span>
+                          ${ses.active ? `<span class="tag-stamp bg-[var(--accent-vermilion)] text-white">SEDANG BERLANGSUNG</span>` : ''}
+                        </div>
+                        <div class="text-xs text-[var(--ink-muted)] mt-0.5">PIC Lapangan: <strong>${escapeHtml(ses.pic)}</strong></div>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                      <button type="button" data-activate-ses="${escapeHtml(ses.id)}" class="activate-ses-btn arch-btn px-3 py-1.5 text-xs ${ses.active ? 'bg-[var(--ink-main)] text-[var(--bg-paper)]' : 'bg-[var(--bg-surface)]'} cursor-pointer">
+                        ${ses.active ? '● Sesi Aktif' : 'Tandai Aktif'}
+                      </button>
+                      <button type="button" data-del-ses="${escapeHtml(ses.id)}" class="del-ses-btn text-xs font-bold text-[#E04F26] hover:underline cursor-pointer">
+                        Hapus
+                      </button>
+                    </div>
+                  </div>
+                `).join('')
+            }
+          </div>
+        </section>
+      `;
+    }
+
+    // INTERNAL 3: PROKER KANBAN & NOTULENSI RAPAT
+    function renderProkerTab() {
+      if (!isInternalRole()) return '';
+
+      const columns = ['Belum Mulai', 'Dikerjakan', 'Selesai'];
+
+      return `
+        <section class="space-y-6">
+          <div class="arch-card p-5 sm:p-6 bg-[var(--accent-emerald)] text-white">
+            <span class="tag-stamp bg-zinc-950 text-white">RUANG INTERNAL • ${escapeHtml(state.role)}</span>
+            <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1.5">Proker, Task Board & Notulensi Rapat</h1>
+            <p class="text-xs text-emerald-50 mt-1">Kelola pembagian tugas kepanitiaan, progres program kerja, serta arsip notulensi rapat tertutup.</p>
+          </div>
+
+          <form id="task-create-form" class="arch-card p-5 space-y-3">
+            <div class="font-mono-code text-xs font-bold uppercase">+ Tambah Tugas Program Kerja</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+              <input type="text" name="title" required placeholder="Nama tugas / sie kegiatan..." class="arch-input px-3 py-2 text-sm" />
+              <select name="org" class="arch-input px-3 py-2 text-xs font-bold">
+                <option value="OSIS" ${state.role === 'OSIS' ? 'selected' : ''}>OSIS</option>
+                <option value="DEWAN AMBALAN" ${state.role === 'DEWAN AMBALAN' ? 'selected' : ''}>Dewan Ambalan</option>
+              </select>
+              <input type="text" name="pic" required placeholder="PIC / Penanggung Jawab..." class="arch-input px-3 py-2 text-sm" />
+              <input type="date" name="deadline" required class="arch-input px-3 py-2 text-sm" />
+            </div>
+            <div class="flex justify-end">
+              <button type="submit" class="arch-btn px-4 py-2 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">+ Tambah ke Board</button>
+            </div>
+          </form>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            ${columns.map(col => {
+              const colTasks = state.tasks.filter(t => t.status === col);
+              return `
+                <div class="arch-card p-4 space-y-3 bg-[var(--bg-subtle)]">
+                  <div class="flex items-center justify-between border-b-[1.5px] border-[var(--border-ink)] pb-2">
+                    <span class="font-display font-bold text-sm">${escapeHtml(col)}</span>
+                    <span class="font-mono-code text-xs font-bold px-2 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-ink)]">${colTasks.length}</span>
+                  </div>
+                  ${colTasks.length === 0
+                    ? `<p class="text-xs text-[var(--ink-muted)] py-4 text-center">Belum ada tugas di kolom ini.</p>`
+                    : `<div class="space-y-2.5">
+                        ${colTasks.map(t => `
+                          <div class="p-3.5 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-surface)] space-y-2">
+                            <div class="flex items-center justify-between gap-1.5">
+                              <span class="tag-stamp ${orgPillClass(t.org)}">${escapeHtml(t.org)}</span>
+                              <span class="font-mono-code text-[10px] text-[var(--ink-muted)]">${escapeHtml(formatIndoDate(t.deadline))}</span>
+                            </div>
+                            <div class="font-bold text-sm leading-snug">${escapeHtml(t.title)}</div>
+                            <div class="text-[11px] text-[var(--ink-muted)]">PIC: <strong>${escapeHtml(t.pic)}</strong></div>
+                            <div class="flex items-center justify-between gap-2 pt-2 border-t border-dashed border-[var(--border-ink)]/30">
+                              ${col !== 'Selesai'
+                                ? `<button type="button" data-advance-task="${escapeHtml(t.id)}" class="advance-task-btn arch-btn px-2.5 py-1 text-[11px] bg-[var(--accent-emerald)] text-white cursor-pointer">
+                                    Majukan →
+                                  </button>`
+                                : `<span class="font-mono-code text-[10px] font-bold text-[var(--accent-emerald)]">✓ TUNTAS</span>`
+                              }
+                              <button type="button" data-del-task="${escapeHtml(t.id)}" class="del-task-btn text-[11px] font-bold text-[#E04F26] hover:underline cursor-pointer">Hapus</button>
+                            </div>
+                          </div>
+                        `).join('')}
+                      </div>`
+                  }
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start pt-2">
+            <form id="meeting-create-form" class="lg:col-span-5 arch-card p-5 space-y-3">
+              <div class="font-mono-code text-xs font-bold uppercase">+ Notulensi Rapat Internal</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <select name="org" class="arch-input px-3 py-2 text-xs font-bold">
+                  <option value="OSIS" ${state.role === 'OSIS' ? 'selected' : ''}>OSIS</option>
+                  <option value="DEWAN AMBALAN" ${state.role === 'DEWAN AMBALAN' ? 'selected' : ''}>Dewan Ambalan</option>
+                  <option value="GABUNGAN">Rapat Gabungan</option>
+                </select>
+                <input type="date" name="date" required value="${todayIso()}" class="arch-input px-3 py-2 text-xs" />
+              </div>
+              <input type="text" name="agenda" required placeholder="Agenda rapat..." class="arch-input w-full px-3 py-2 text-sm" />
+              <textarea name="decisions" rows="3" required placeholder="Poin keputusan & pembagian tindak lanjut..." class="arch-input w-full px-3 py-2 text-sm"></textarea>
+              <button type="submit" class="w-full arch-btn py-2.5 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">Simpan Notulensi</button>
+            </form>
+
+            <div class="lg:col-span-7 space-y-3">
+              <h2 class="font-display font-extrabold text-xl">Arsip Notulensi Tertutup</h2>
+              ${state.meetings.length === 0
+                ? emptyIllustration('Belum Ada Notulensi Rapat', 'Catatan rapat internal pengurus akan tersimpan aman di sini.')
+                : state.meetings.map(m => `
+                    <article class="arch-card p-4 space-y-2">
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="tag-stamp ${orgPillClass(m.org)}">${escapeHtml(m.org)}</span>
+                        <div class="flex items-center gap-2">
+                          <span class="font-mono-code text-[11px] text-[var(--ink-muted)]">${escapeHtml(formatIndoDate(m.date))}</span>
+                          <button type="button" data-del-meet="${escapeHtml(m.id)}" class="del-meet-btn text-[11px] font-bold text-[#E04F26] hover:underline cursor-pointer">Hapus</button>
+                        </div>
+                      </div>
+                      <h3 class="font-bold text-base">${escapeHtml(m.agenda)}</h3>
+                      <p class="text-xs text-[var(--ink-muted)] whitespace-pre-line leading-relaxed">${escapeHtml(m.decisions)}</p>
+                    </article>
+                  `).join('')
+              }
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    // INTERNAL 4: TOKEN ABSENSI CEPAT + QR, KAS & INVENTARIS
+    function renderLogistikTab() {
+      if (!isInternalRole()) return '';
+
+      const hadirCount = state.attendance.filter(x => x.status === 'Hadir').length;
+      const totalAtt = state.attendance.length;
+      const hadirPct = totalAtt > 0 ? Math.round((hadirCount / totalAtt) * 100) : 0;
+
+      const totalMasuk = state.ledger.filter(l => l.type === 'Pemasukan').reduce((s, l) => s + Number(l.amount || 0), 0);
+      const totalKeluar = state.ledger.filter(l => l.type === 'Pengeluaran').reduce((s, l) => s + Number(l.amount || 0), 0);
+      const saldo = totalMasuk - totalKeluar;
+
+      const activeSessions = state.attendanceSessions.filter(s => s.active);
+
+      return `
+        <section class="space-y-6">
+          <div class="arch-card p-5 sm:p-6 bg-[var(--accent-amber)] text-zinc-950">
+            <span class="tag-stamp bg-zinc-950 text-white">RUANG INTERNAL • ${escapeHtml(state.role)}</span>
+            <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1.5">Token Absensi Cepat, Kas & Inventaris</h1>
+            <p class="text-xs font-medium mt-1">Buat token/QR sesi rapat & latihan, rekap kehadiran anggota, catat kas, serta pantau inventaris.</p>
+          </div>
+
+          <!-- 1. Dynamic Token & QR Attendance System -->
+          <div class="arch-card p-5 space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="font-display font-extrabold text-xl">Sistem Token & QR Absensi Cepat</h2>
+                <p class="text-xs text-[var(--ink-muted)]">Tingkat kehadiran tercatat: <strong>${hadirCount}/${totalAtt} (${hadirPct}%)</strong></p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+              <!-- Create Session Token -->
+              <form id="att-session-form" class="lg:col-span-6 p-4 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] space-y-3">
+                <div class="font-mono-code text-xs font-bold uppercase">+ Buat Sesi Token Absensi</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input type="text" name="title" required placeholder="Nama Rapat / Latihan Rutin..." class="arch-input px-3 py-2 text-xs sm:text-sm" />
+                  <select name="org" class="arch-input px-3 py-2 text-xs font-bold">
+                    <option value="OSIS" ${state.role === 'OSIS' ? 'selected' : ''}>OSIS</option>
+                    <option value="DEWAN AMBALAN" ${state.role === 'DEWAN AMBALAN' ? 'selected' : ''}>Dewan Ambalan</option>
+                  </select>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input type="text" name="customCode" placeholder="Kode Token (kosongkan = otomatis)" class="arch-input font-mono-code uppercase px-3 py-2 text-xs font-bold" />
+                  <button type="submit" class="arch-btn py-2 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">
+                    Terbitkan Token & QR
+                  </button>
+                </div>
+              </form>
+
+              <!-- Self Check-In via Session Token -->
+              <form id="att-checkin-form" class="lg:col-span-6 p-4 rounded-xl border-[1.5px] border-[var(--accent-emerald)] bg-[var(--bg-surface)] space-y-3">
+                <div class="font-mono-code text-xs font-bold uppercase text-[var(--accent-emerald)]">✓ Check-In Mandiri Pakai Token</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input type="text" name="name" required placeholder="Nama Lengkap Anggota..." class="arch-input px-3 py-2 text-xs sm:text-sm" />
+                  <input type="text" name="token" required placeholder="Masukkan Token Sesi..." class="arch-input font-mono-code uppercase px-3 py-2 text-xs font-bold" />
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <select name="status" class="arch-input px-3 py-2 text-xs font-bold">
+                    <option value="Hadir">Hadir</option>
+                    <option value="Izin">Izin</option>
+                    <option value="Sakit">Sakit</option>
+                  </select>
+                  <button type="submit" class="arch-btn py-2 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">
+                    Catat Kehadiran Sekarang
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Active Session Cards with Visual QR -->
+            ${activeSessions.length > 0 ? `
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                ${activeSessions.map(ses => `
+                  <div class="p-4 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] flex items-center gap-3.5">
+                    <div class="w-20 h-20 p-1.5 rounded-xl border border-[var(--border-ink)] bg-white shrink-0">
+                      ${generateMatrixQrSvg(`SORA-ATT:${ses.code}`)}
+                    </div>
+                    <div class="min-w-0 flex-1 space-y-1">
+                      <span class="tag-stamp ${orgPillClass(ses.org)}">${escapeHtml(ses.org)}</span>
+                      <div class="font-bold text-xs truncate">${escapeHtml(ses.title)}</div>
+                      <div class="font-mono-code text-sm font-extrabold tracking-wider text-[var(--accent-vermilion)]">${escapeHtml(ses.code)}</div>
+                      <button type="button" data-close-ses="${escapeHtml(ses.id)}" class="close-att-ses-btn text-[11px] font-bold underline text-[var(--ink-muted)] hover:text-[var(--ink-main)] cursor-pointer">
+                        Tutup Sesi
+                      </button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+
+            <!-- Manual Attendance Quick Input -->
+            <form id="att-add-form" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 pt-2 border-t border-dashed border-[var(--border-ink)]/35">
+              <input type="text" name="name" required placeholder="Input manual nama..." class="arch-input px-3 py-2 text-xs" />
+              <select name="org" class="arch-input px-3 py-2 text-xs font-bold">
+                <option value="OSIS" ${state.role === 'OSIS' ? 'selected' : ''}>OSIS</option>
+                <option value="DEWAN AMBALAN" ${state.role === 'DEWAN AMBALAN' ? 'selected' : ''}>Dewan Ambalan</option>
+              </select>
+              <select name="status" class="arch-input px-3 py-2 text-xs font-bold">
+                <option value="Hadir">Hadir</option>
+                <option value="Izin">Izin</option>
+                <option value="Sakit">Sakit</option>
+                <option value="Alfa">Alfa</option>
+              </select>
+              <input type="date" name="date" required value="${todayIso()}" class="arch-input px-3 py-2 text-xs" />
+              <button type="submit" class="arch-btn py-2 text-xs bg-[var(--bg-subtle)] text-[var(--ink-main)] cursor-pointer">+ Input Manual</button>
+            </form>
+
+            ${state.attendance.length === 0
+              ? `<p class="text-xs text-[var(--ink-muted)]">Belum ada catatan kehadiran.</p>`
+              : `<div class="overflow-x-auto">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                      <tr class="border-b-[1.5px] border-[var(--border-ink)] font-mono-code uppercase text-[10px]">
+                        <th class="py-2 pr-3">Nama</th>
+                        <th class="py-2 pr-3">Organisasi</th>
+                        <th class="py-2 pr-3">Tanggal & Jam</th>
+                        <th class="py-2 pr-3">Sesi / Token</th>
+                        <th class="py-2 pr-3">Status</th>
+                        <th class="py-2 text-right">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${state.attendance.map(row => `
+                        <tr class="border-b border-[var(--border-ink)]/20">
+                          <td class="py-2.5 pr-3 font-bold">${escapeHtml(row.name)}</td>
+                          <td class="py-2.5 pr-3"><span class="tag-stamp ${orgPillClass(row.org)}">${escapeHtml(row.org)}</span></td>
+                          <td class="py-2.5 pr-3 font-mono-code">${escapeHtml(formatIndoDate(row.date))} ${row.time ? `• ${escapeHtml(row.time)}` : ''}</td>
+                          <td class="py-2.5 pr-3 font-mono-code text-[11px]">${escapeHtml(row.sessionCode || 'MANUAL')}</td>
+                          <td class="py-2.5 pr-3 font-bold">${escapeHtml(row.status)}</td>
+                          <td class="py-2.5 text-right">
+                            <button type="button" data-del-att="${escapeHtml(row.id)}" class="del-att-btn text-[#E04F26] font-bold hover:underline cursor-pointer">Hapus</button>
+                          </td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>`
+            }
+          </div>
+
+          <!-- 2. Kas & Anggaran -->
+          <div class="arch-card p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="font-display font-extrabold text-xl">Kas & Anggaran Organisasi</h2>
+                <p class="text-xs text-[var(--ink-muted)]">Pemasukan: <strong>${formatRupiah(totalMasuk)}</strong> • Pengeluaran: <strong>${formatRupiah(totalKeluar)}</strong></p>
+              </div>
+              <div class="px-3.5 py-2 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] font-mono-code text-xs font-bold">
+                SALDO: <span class="${saldo >= 0 ? 'text-[var(--accent-emerald)]' : 'text-[#E04F26]'}">${formatRupiah(saldo)}</span>
+              </div>
+            </div>
+
+            <form id="ledger-add-form" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+              <select name="type" class="arch-input px-3 py-2 text-xs font-bold">
+                <option value="Pemasukan">Pemasukan (+)</option>
+                <option value="Pengeluaran">Pengeluaran (-)</option>
+              </select>
+              <select name="org" class="arch-input px-3 py-2 text-xs font-bold">
+                <option value="OSIS" ${state.role === 'OSIS' ? 'selected' : ''}>OSIS</option>
+                <option value="DEWAN AMBALAN" ${state.role === 'DEWAN AMBALAN' ? 'selected' : ''}>Dewan Ambalan</option>
+              </select>
+              <input type="text" name="note" required placeholder="Keterangan transaksi..." class="arch-input px-3 py-2 text-sm" />
+              <input type="number" name="amount" min="1" required placeholder="Nominal (Rp)" class="arch-input px-3 py-2 text-sm" />
+              <button type="submit" class="arch-btn py-2 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">+ Catat Kas</button>
+            </form>
+
+            ${state.ledger.length === 0
+              ? `<p class="text-xs text-[var(--ink-muted)]">Belum ada transaksi kas tercatat.</p>`
+              : `<div class="space-y-2">
+                  ${state.ledger.map(item => `
+                    <div class="p-3 rounded-xl border border-[var(--border-ink)]/30 bg-[var(--bg-subtle)] flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <div class="flex items-center gap-2">
+                        <span class="tag-stamp ${item.type === 'Pemasukan' ? 'bg-[var(--accent-emerald)] text-white' : 'bg-[var(--accent-vermilion)] text-white'}">${escapeHtml(item.type)}</span>
+                        <span class="tag-stamp ${orgPillClass(item.org)}">${escapeHtml(item.org)}</span>
+                        <strong>${escapeHtml(item.note)}</strong>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <span class="font-mono-code font-bold">${item.type === 'Pemasukan' ? '+' : '-'}${formatRupiah(item.amount)}</span>
+                        <button type="button" data-del-ledger="${escapeHtml(item.id)}" class="del-ledger-btn text-[#E04F26] font-bold hover:underline cursor-pointer">Hapus</button>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>`
+            }
+          </div>
+
+          <!-- 3. Inventaris & Logistik -->
+          <div class="arch-card p-5 space-y-4">
+            <h2 class="font-display font-extrabold text-xl">Inventaris & Logistik</h2>
+            <form id="inv-add-form" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+              <input type="text" name="item" required placeholder="Nama barang (tenda, mic, bendera...)" class="arch-input px-3 py-2 text-sm" />
+              <input type="number" name="qty" min="1" value="1" required placeholder="Jumlah" class="arch-input px-3 py-2 text-sm" />
+              <select name="condition" class="arch-input px-3 py-2 text-xs font-bold">
+                <option value="Baik">Baik</option>
+                <option value="Perlu Perbaikan">Perlu Perbaikan</option>
+              </select>
+              <input type="text" name="holder" required placeholder="Lokasi / Peminjam saat ini..." class="arch-input px-3 py-2 text-sm" />
+              <button type="submit" class="arch-btn py-2 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">+ Tambah Barang</button>
+            </form>
+
+            ${state.inventory.length === 0
+              ? `<p class="text-xs text-[var(--ink-muted)]">Belum ada data inventaris barang.</p>`
+              : `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  ${state.inventory.map(inv => `
+                    <div class="p-3.5 rounded-xl border-[1.5px] border-[var(--border-ink)] bg-[var(--bg-subtle)] space-y-1.5">
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="font-bold text-sm">${escapeHtml(inv.item)}</span>
+                        <span class="font-mono-code text-xs font-bold px-2 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-ink)]">${inv.qty} Unit</span>
+                      </div>
+                      <div class="text-xs text-[var(--ink-muted)]">Kondisi: <strong>${escapeHtml(inv.condition)}</strong></div>
+                      <div class="text-xs text-[var(--ink-muted)]">Lokasi/Peminjam: <strong>${escapeHtml(inv.holder)}</strong></div>
+                      <div class="pt-1 flex justify-end">
+                        <button type="button" data-del-inv="${escapeHtml(inv.id)}" class="del-inv-btn text-[11px] font-bold text-[#E04F26] hover:underline cursor-pointer">Hapus</button>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>`
+            }
+          </div>
+        </section>
+      `;
+    }
+
+    // INTERNAL 5: CETAK PDF KOP SURAT, KODE SINKRONISASI CEPAT & PENGATURAN
+    function renderPengaturanTab() {
+      if (!isInternalRole()) return '';
+      const canEditCodes = state.role === 'PEMBINA' || state.masterUnlocked;
+
+      return `
+        <section class="max-w-4xl mx-auto space-y-6">
+          <div>
+            <h1 class="font-display font-extrabold text-2xl sm:text-3xl">Cetak PDF Resmi, Sinkronisasi & Pengaturan</h1>
+            <p class="text-xs sm:text-sm text-[var(--ink-muted)] mt-1">
+              Terbitkan laporan siap cetak/PDF dengan kop surat organisasi, salin kode sinkronisasi WhatsApp, atau kelola kode akses.
+            </p>
+          </div>
+
+          <!-- 1. Print-Ready Letterhead Report Generator -->
+          <div class="arch-card p-5 sm:p-6 space-y-4 border-[var(--accent-vermilion)]">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="font-display font-bold text-lg">Generator Laporan Resmi & Cetak PDF</h2>
+                <p class="text-xs text-[var(--ink-muted)]">Format siap cetak / Simpan PDF lengkap dengan Kop Surat & kolom tanda tangan Ketua & Pembina.</p>
+              </div>
+              <span class="tag-stamp bg-[var(--accent-vermilion)] text-white">PRINT / PDF READY</span>
+            </div>
+
+            <form id="pdf-report-form" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold mb-1">PILIH KOP ORGANISASI</label>
+                <select name="letterhead" class="arch-input w-full px-3 py-2 text-xs font-bold">
+                  <option value="OSIS" ${state.role === 'OSIS' ? 'selected' : ''}>Kop Resmi OSIS</option>
+                  <option value="DEWAN AMBALAN" ${state.role === 'DEWAN AMBALAN' ? 'selected' : ''}>Kop Resmi Dewan Ambalan</option>
+                  <option value="GABUNGAN" ${state.role === 'PEMBINA' ? 'selected' : ''}>Kop Gabungan OSIS & Ambalan</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold mb-1">JENIS DOKUMEN LAPORAN</label>
+                <select name="docType" class="arch-input w-full px-3 py-2 text-xs font-bold">
+                  <option value="notulensi">Notulensi Rapat & Proker</option>
+                  <option value="absensi">Rekap Absensi Kegiatan</option>
+                  <option value="kas">Laporan Kas & Anggaran</option>
+                  <option value="aspirasi">Rekap Aspirasi & Tindak Lanjut</option>
+                </select>
+              </div>
+              <div class="flex items-end">
+                <button type="submit" class="w-full arch-btn py-2.5 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">
+                  Buka Pratinjau Cetak / PDF
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- 2. Fast Sync Code (WhatsApp Paste) + QR Sync + JSON Export/Import -->
+          <div class="arch-card p-5 sm:p-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h2 class="font-display font-bold text-lg">Sinkronisasi Cepat Antar-HP (Kode WA, QR & JSON)</h2>
+              <span class="tag-stamp bg-[var(--accent-emerald)] text-white">OFFLINE SYNC</span>
+            </div>
+            <p class="text-xs text-[var(--ink-muted)] leading-relaxed">
+              Transfer data antar-pengurus dalam hitungan detik tanpa server: klik <strong>Salin Kode Sinkronisasi</strong> lalu tempel di grup WhatsApp, atau gunakan file <code>.json</code>.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-2.5">
+              <button id="copy-fast-sync-btn" type="button" class="arch-btn px-4 py-2.5 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">
+                Salin Kode Sinkronisasi (WA)
+              </button>
+              <button id="open-qr-sync-btn" type="button" class="arch-btn px-4 py-2.5 text-xs bg-[var(--accent-amber)] text-zinc-950 cursor-pointer">
+                Tampilkan QR Sync
+              </button>
+              <button id="settings-export-btn" type="button" class="arch-btn px-4 py-2.5 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">
+                Export File (.json)
+              </button>
+            </div>
+
+            <!-- Paste Sync Code or Import JSON -->
+            <div class="pt-3 border-t border-dashed border-[var(--border-ink)]/35 space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <label for="paste-sync-code-input" class="font-mono-code text-[11px] font-bold uppercase">
+                  Tempel Kode Sinkronisasi (SORA1:...) atau Impor File JSON
+                </label>
+                <select id="import-mode-select" class="arch-input px-3 py-1.5 text-xs font-bold">
+                  <option value="merge">Mode: Gabungkan (Merge)</option>
+                  <option value="replace">Mode: Ganti Semua (Replace)</option>
+                </select>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-2">
+                <input id="paste-sync-code-input" type="text" placeholder="Tempel kode SORA1:... dari WhatsApp di sini..." class="arch-input font-mono-code flex-1 px-3 py-2 text-xs" />
+                <button id="apply-pasted-sync-btn" type="button" class="arch-btn px-4 py-2 text-xs bg-[var(--accent-emerald)] text-white cursor-pointer">
+                  Muat Kode
+                </button>
+                <label for="settings-import-file" class="arch-btn px-4 py-2 text-xs bg-[var(--bg-subtle)] text-[var(--ink-main)] cursor-pointer text-center">
+                  Pilih File .JSON
+                </label>
+                <input id="settings-import-file" type="file" accept=".json,application/json" class="hidden" />
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-dashed border-[var(--border-ink)]/35 flex justify-between items-center">
+              <span class="text-xs text-[var(--ink-muted)]">Kosongkan seluruh catatan ke kondisi awal bersih:</span>
+              <button id="settings-reset-btn" type="button" class="arch-btn px-3.5 py-2 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">
+                Reset Data
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Access Codes Config -->
+          ${canEditCodes ? `
+            <form id="codes-update-form" class="arch-card p-5 sm:p-6 space-y-4">
+              <div class="flex items-center justify-between gap-2">
+                <h2 class="font-display font-bold text-lg">Konfigurasi Kode Akses Peran</h2>
+                <span class="tag-stamp bg-[var(--ink-main)] text-[var(--bg-paper)]">PEMBINA / MASTER</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block font-mono-code text-[11px] font-bold mb-1">KODE OSIS</label>
+                  <input type="text" name="osis" required value="${escapeHtml(state.accessCodes.osis)}" class="arch-input font-mono-code w-full px-3 py-2 text-xs font-bold" />
+                </div>
+                <div>
+                  <label class="block font-mono-code text-[11px] font-bold mb-1">KODE DEWAN AMBALAN</label>
+                  <input type="text" name="ambalan" required value="${escapeHtml(state.accessCodes.ambalan)}" class="arch-input font-mono-code w-full px-3 py-2 text-xs font-bold" />
+                </div>
+                <div>
+                  <label class="block font-mono-code text-[11px] font-bold mb-1">KODE PEMBINA</label>
+                  <input type="text" name="pembina" required value="${escapeHtml(state.accessCodes.pembina)}" class="arch-input font-mono-code w-full px-3 py-2 text-xs font-bold" />
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <button type="submit" class="arch-btn px-4 py-2 text-xs bg-[var(--accent-vermilion)] text-white cursor-pointer">
+                  Simpan Perubahan Kode
+                </button>
+              </div>
+            </form>
+          ` : ''}
+
+          <!-- 4. School Letterhead & Identity Editor -->
+          <form id="school-identity-form" class="arch-card p-5 sm:p-6 space-y-3">
+            <div class="flex items-center justify-between">
+              <h2 class="font-display font-bold text-lg">Identitas Sekolah & Kop Surat</h2>
+              <span class="tag-stamp bg-[var(--bg-subtle)]">KOP RESMI</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold mb-1">NAMA SISTEM</label>
+                <input type="text" name="title" required value="${escapeHtml(state.branding.title)}" class="arch-input w-full px-3 py-2 text-sm font-bold" />
+              </div>
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold mb-1">SUBJUDUL HEADER</label>
+                <input type="text" name="subtitle" required value="${escapeHtml(state.branding.subtitle)}" class="arch-input w-full px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold mb-1">NAMA SEKOLAH (KOP PDF)</label>
+                <input type="text" name="schoolName" required value="${escapeHtml(state.branding.schoolName)}" class="arch-input w-full px-3 py-2 text-xs font-bold" />
+              </div>
+              <div>
+                <label class="block font-mono-code text-[11px] font-bold mb-1">ALAMAT SEKOLAH (KOP PDF)</label>
+                <input type="text" name="schoolAddress" required value="${escapeHtml(state.branding.schoolAddress)}" class="arch-input w-full px-3 py-2 text-xs" />
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button type="submit" class="arch-btn px-4 py-2 text-xs bg-[var(--ink-main)] text-[var(--bg-paper)] cursor-pointer">
+                Simpan Identitas Kop
+              </button>
+            </div>
+          </form>
+
+          <!-- Creator Attribution -->
+          <div class="arch-card p-5 space-y-1.5">
+            <span class="tag-stamp bg-[var(--ink-main)] text-[var(--bg-paper)]">TENTANG APLIKASI</span>
+            <h3 class="font-display font-bold text-base pt-1">SORA — Sinergi Organisasi & Aspirasi</h3>
+            <p class="text-xs text-[var(--ink-muted)] leading-relaxed">
+              Dirancang dan dibangun oleh <strong class="text-[var(--ink-main)]">Muhammad Nazrul Azhar</strong> sebagai pusat koordinasi OSIS, Dewan Ambalan, dan ruang aspirasi siswa yang cepat, responsif, mendukung instalasi offline PWA, serta bebas ketergantungan server.
+            </p>
+          </div>
+        </section>
+      `;
+    }
+
+    // =========================================================================
+    // PRINT-READY PDF LETTERHEAD GENERATOR
+    // =========================================================================
+    function openLetterheadPrintPreview(letterhead, docType) {
+      const orgHeaders = {
+        OSIS: {
+          orgTitle: 'ORGANISASI SISWA INTRA SEKOLAH (OSIS)',
+          chairLabel: 'Ketua OSIS',
+          advisorLabel: 'Pembina OSIS'
+        },
+        'DEWAN AMBALAN': {
+          orgTitle: 'GERAKAN PRAMUKA • DEWAN AMBALAN',
+          chairLabel: 'Pradana Putra / Putri',
+          advisorLabel: 'Pembina Gugus Depan'
+        },
+        GABUNGAN: {
+          orgTitle: 'SINERGI PENGURUS OSIS & DEWAN AMBALAN',
+          chairLabel: 'Ketua OSIS / Pradana',
+          advisorLabel: 'Pembina Kesiswaan'
+        }
+      };
+
+      const head = orgHeaders[letterhead] || orgHeaders.GABUNGAN;
+      let docTitle = '';
+      let contentHtml = '';
+
+      if (docType === 'notulensi') {
+        docTitle = 'LAPORAN NOTULENSI RAPAT & PROGRAM KERJA';
+        const rows = state.meetings.length === 0
+          ? '<p class="text-xs italic text-zinc-600">Belum ada catatan notulensi rapat.</p>'
+          : state.meetings.map((m, i) => `
+              <div class="border border-zinc-400 p-3 rounded mb-2.5 text-xs">
+                <div class="font-bold">${i + 1}. [${escapeHtml(m.org)}] ${escapeHtml(m.agenda)} (${escapeHtml(formatIndoDate(m.date))})</div>
+                <div class="mt-1 whitespace-pre-line text-zinc-800">${escapeHtml(m.decisions)}</div>
+              </div>
+            `).join('');
+        contentHtml = rows;
+      } else if (docType === 'absensi') {
+        docTitle = 'REKAPITULASI KEHADIRAN RAPAT & LATIHAN';
+        contentHtml = state.attendance.length === 0
+          ? '<p class="text-xs italic text-zinc-600">Belum ada data absensi.</p>'
+          : `
+            <table class="w-full border-collapse border border-zinc-800 text-xs">
+              <thead>
+                <tr class="bg-zinc-100">
+                  <th class="border border-zinc-800 p-2 text-left">No</th>
+                  <th class="border border-zinc-800 p-2 text-left">Nama Anggota</th>
+                  <th class="border border-zinc-800 p-2 text-left">Organisasi</th>
+                  <th class="border border-zinc-800 p-2 text-left">Tanggal</th>
+                  <th class="border border-zinc-800 p-2 text-left">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${state.attendance.map((r, i) => `
+                  <tr>
+                    <td class="border border-zinc-800 p-2">${i + 1}</td>
+                    <td class="border border-zinc-800 p-2 font-bold">${escapeHtml(r.name)}</td>
+                    <td class="border border-zinc-800 p-2">${escapeHtml(r.org)}</td>
+                    <td class="border border-zinc-800 p-2">${escapeHtml(formatIndoDate(r.date))}</td>
+                    <td class="border border-zinc-800 p-2">${escapeHtml(r.status)}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+      } else if (docType === 'kas') {
+        docTitle = 'LAPORAN KAS & ANGGARAN ORGANISASI';
+        const masuk = state.ledger.filter(l => l.type === 'Pemasukan').reduce((s, l) => s + Number(l.amount || 0), 0);
+        const keluar = state.ledger.filter(l => l.type === 'Pengeluaran').reduce((s, l) => s + Number(l.amount || 0), 0);
+        const saldo = masuk - keluar;
+
+        contentHtml = `
+          <div class="grid grid-cols-3 gap-2 text-xs mb-3">
+            <div class="border border-zinc-800 p-2">Pemasukan: <strong>${formatRupiah(masuk)}</strong></div>
+            <div class="border border-zinc-800 p-2">Pengeluaran: <strong>${formatRupiah(keluar)}</strong></div>
+            <div class="border border-zinc-800 p-2">Saldo Akhir: <strong>${formatRupiah(saldo)}</strong></div>
+          </div>
+          ${state.ledger.length === 0
+            ? '<p class="text-xs italic text-zinc-600">Belum ada transaksi kas.</p>'
+            : `<table class="w-full border-collapse border border-zinc-800 text-xs">
+                <thead>
+                  <tr class="bg-zinc-100">
+                    <th class="border border-zinc-800 p-2 text-left">No</th>
+                    <th class="border border-zinc-800 p-2 text-left">Jenis</th>
+                    <th class="border border-zinc-800 p-2 text-left">Organisasi</th>
+                    <th class="border border-zinc-800 p-2 text-left">Keterangan</th>
+                    <th class="border border-zinc-800 p-2 text-right">Nominal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${state.ledger.map((l, i) => `
+                    <tr>
+                      <td class="border border-zinc-800 p-2">${i + 1}</td>
+                      <td class="border border-zinc-800 p-2">${escapeHtml(l.type)}</td>
+                      <td class="border border-zinc-800 p-2">${escapeHtml(l.org)}</td>
+                      <td class="border border-zinc-800 p-2">${escapeHtml(l.note)}</td>
+                      <td class="border border-zinc-800 p-2 text-right font-mono-code">${formatRupiah(l.amount)}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>`
+          }
+        `;
+      } else {
+        docTitle = 'REKAPITULASI ASPIRASI & TINDAK LANJUT SISWA';
+        contentHtml = state.aspirations.length === 0
+          ? '<p class="text-xs italic text-zinc-600">Belum ada data aspirasi siswa.</p>'
+          : `
+            <table class="w-full border-collapse border border-zinc-800 text-xs">
+              <thead>
+                <tr class="bg-zinc-100">
+                  <th class="border border-zinc-800 p-2 text-left">Tiket</th>
+                  <th class="border border-zinc-800 p-2 text-left">Tujuan</th>
+                  <th class="border border-zinc-800 p-2 text-left">Aspirasi / Laporan</th>
+                  <th class="border border-zinc-800 p-2 text-left">Status</th>
+                  <th class="border border-zinc-800 p-2 text-left">Tanggapan Pengurus</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${state.aspirations.map(a => `
+                  <tr>
+                    <td class="border border-zinc-800 p-2 font-mono-code">#${escapeHtml(a.ticketCode)}</td>
+                    <td class="border border-zinc-800 p-2">${escapeHtml(a.target)}</td>
+                    <td class="border border-zinc-800 p-2"><strong>${escapeHtml(a.subject)}</strong><br/>${escapeHtml(a.detail)}</td>
+                    <td class="border border-zinc-800 p-2">${escapeHtml(a.status)}</td>
+                    <td class="border border-zinc-800 p-2">${escapeHtml(a.reply || '-')}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+      }
+
+      const body = document.getElementById('print-sheet-body');
+      body.innerHTML = `
+        <!-- Formal Kop Surat -->
+        <div class="text-center border-b-4 border-double border-zinc-950 pb-4">
+          <div class="text-xs font-bold tracking-widest uppercase">${escapeHtml(state.branding.schoolName)}</div>
+          <div class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">${escapeHtml(head.orgTitle)}</div>
+          <div class="text-[11px] text-zinc-700 mt-0.5">${escapeHtml(state.branding.schoolAddress)}</div>
+        </div>
+
+        <div class="text-center py-2">
+          <div class="font-bold text-sm underline uppercase">${escapeHtml(docTitle)}</div>
+          <div class="text-[11px] text-zinc-600 mt-0.5">Tanggal Cetak: ${escapeHtml(formatIndoDate(todayIso()))} • Sistem Informasi SORA</div>
+        </div>
+
+        <div>${contentHtml}</div>
+
+        <!-- Official Signature Block -->
+        <div class="grid grid-cols-2 gap-8 pt-10 text-xs text-center">
+          <div>
+            <div>Mengetahui,</div>
+            <div class="font-bold">${escapeHtml(head.advisorLabel)}</div>
+            <div class="h-16"></div>
+            <div class="font-bold underline">( ........................................ )</div>
+          </div>
+          <div>
+            <div>Disusun Oleh,</div>
+            <div class="font-bold">${escapeHtml(head.chairLabel)}</div>
+            <div class="h-16"></div>
+            <div class="font-bold underline">( ........................................ )</div>
+          </div>
+        </div>
+      `;
+
+      const sheet = document.getElementById('print-sheet');
+      sheet.classList.remove('hidden');
+    }
+
+    // =========================================================================
+    // FAST SYNC CODE ('SORA1:...') & JSON MERGE / REPLACE
+    // =========================================================================
+    function buildFastSyncCode() {
+      const sharePayload = {
+        branding: state.branding,
+        announcements: state.announcements,
+        aspirations: state.aspirations,
+        schedules: state.schedules,
+        polls: state.polls,
+        mading: state.mading,
+        lostFound: state.lostFound,
+        liveEvent: state.liveEvent,
+        tasks: state.tasks,
+        meetings: state.meetings,
+        attendanceSessions: state.attendanceSessions,
+        attendance: state.attendance,
+        ledger: state.ledger,
+        inventory: state.inventory
+      };
+      const jsonStr = JSON.stringify(sharePayload);
+      const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+      return `SORA1:${b64}`;
+    }
+
+    function decodeFastSyncCode(codeStr) {
+      const trimmed = String(codeStr || '').trim();
+      if (!trimmed.startsWith('SORA1:')) {
+        throw new Error('Prefix kode tidak valid');
+      }
+      const b64 = trimmed.slice(6);
+      const jsonStr = decodeURIComponent(escape(atob(b64)));
+      return JSON.parse(jsonStr);
+    }
+
+    function mergeArrayById(existingArr, incomingArr) {
+      const map = new Map();
+      (Array.isArray(existingArr) ? existingArr : []).forEach(item => {
+        if (item && item.id) map.set(item.id, item);
+      });
+      (Array.isArray(incomingArr) ? incomingArr : []).forEach(item => {
+        if (item && item.id) map.set(item.id, item);
+      });
+      return Array.from(map.values());
+    }
+
+    function applyIncomingDataset(incoming, mode) {
+      const base = createCleanProductionState();
+      if (mode === 'replace') {
+        const keepRole = state.role;
+        const keepMaster = state.masterUnlocked;
+        state = {
+          ...base,
+          ...incoming,
+          role: keepRole,
+          masterUnlocked: keepMaster || Boolean(incoming.masterUnlocked),
+          branding: { ...base.branding, ...(incoming.branding || {}) },
+          accessCodes: { ...base.accessCodes, ...(incoming.accessCodes || {}) },
+          liveEvent: {
+            ...base.liveEvent,
+            ...(incoming.liveEvent || {}),
+            sessions: Array.isArray(incoming.liveEvent?.sessions) ? incoming.liveEvent.sessions : []
+          }
+        };
+      } else {
+        state.announcements = mergeArrayById(state.announcements, incoming.announcements);
+        state.aspirations = mergeArrayById(state.aspirations, incoming.aspirations);
+        state.schedules = mergeArrayById(state.schedules, incoming.schedules);
+        state.polls = mergeArrayById(state.polls, incoming.polls);
+        state.mading = mergeArrayById(state.mading, incoming.mading);
+        state.lostFound = mergeArrayById(state.lostFound, incoming.lostFound);
+        state.tasks = mergeArrayById(state.tasks, incoming.tasks);
+        state.meetings = mergeArrayById(state.meetings, incoming.meetings);
+        state.attendanceSessions = mergeArrayById(state.attendanceSessions, incoming.attendanceSessions);
+        state.attendance = mergeArrayById(state.attendance, incoming.attendance);
+        state.ledger = mergeArrayById(state.ledger, incoming.ledger);
+        state.inventory = mergeArrayById(state.inventory, incoming.inventory);
+        if (incoming.liveEvent?.sessions?.length) {
+          state.liveEvent.eventName = incoming.liveEvent.eventName || state.liveEvent.eventName;
+          state.liveEvent.eventDate = incoming.liveEvent.eventDate || state.liveEvent.eventDate;
+          state.liveEvent.sessions = mergeArrayById(state.liveEvent.sessions, incoming.liveEvent.sessions);
+        }
+      }
+      saveState();
+    }
+
+    function exportJsonFile() {
+      const payload = JSON.stringify(state, null, 2);
+      const blob = new Blob([payload], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `sora-sync-${todayIso()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('File backup JSON berhasil diunduh.', 'success');
+    }
+
+    // =========================================================================
+    // MAIN ROUTER & EVENT BINDINGS
+    // =========================================================================
+    function renderApp() {
+      renderNavigation();
+      const main = document.getElementById('app-main');
+      main.classList.remove('animate-view');
+      void main.offsetWidth;
+      main.classList.add('animate-view');
+
+      switch (state.activeTab) {
+        case 'aspirasi':
+          main.innerHTML = renderAspirasi();
+          bindAspirasiEvents();
+          break;
+        case 'jadwal':
+          main.innerHTML = renderJadwalVoting();
+          bindJadwalVotingEvents();
+          break;
+        case 'mading':
+          main.innerHTML = renderMadingTab();
+          bindMadingEvents();
+          break;
+        case 'lostfound':
+          main.innerHTML = renderLostFoundTab();
+          bindLostFoundEvents();
+          break;
+        case 'moderasi':
+          main.innerHTML = isInternalRole() ? renderModerasiTab() : renderBeranda();
+          if (isInternalRole()) bindModerasiEvents();
+          else bindBerandaEvents();
+          break;
+        case 'live-event':
+          main.innerHTML = isInternalRole() ? renderLiveEventTab() : renderBeranda();
+          if (isInternalRole()) bindLiveEventEvents();
+          else bindBerandaEvents();
+          break;
+        case 'proker':
+          main.innerHTML = isInternalRole() ? renderProkerTab() : renderBeranda();
+          if (isInternalRole()) bindProkerEvents();
+          else bindBerandaEvents();
+          break;
+        case 'logistik':
+          main.innerHTML = isInternalRole() ? renderLogistikTab() : renderBeranda();
+          if (isInternalRole()) bindLogistikEvents();
+          else bindBerandaEvents();
+          break;
+        case 'pengaturan':
+          main.innerHTML = isInternalRole() ? renderPengaturanTab() : renderBeranda();
+          if (isInternalRole()) bindPengaturanEvents();
+          else bindBerandaEvents();
+          break;
+        case 'beranda':
+        default:
+          main.innerHTML = renderBeranda();
+          bindBerandaEvents();
+          break;
+      }
+
+      document.querySelectorAll('.jump-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeTab = btn.dataset.jumpTab;
+          saveState();
+          renderApp();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+    }
+
+    function bindBerandaEvents() {
+      const form = document.getElementById('home-ann-form');
+      form?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const title = String(fd.get('title') || '').trim();
+        const body = String(fd.get('body') || '').trim();
+        if (!title || !body) return;
+        state.announcements.unshift({
+          id: 'ann-' + Date.now().toString(36),
+          tag: String(fd.get('tag') || 'PENTING'),
+          title,
+          body,
+          pinned: Boolean(fd.get('pinned')),
+          authorRole: state.role,
+          date: formatIndoDate(todayIso())
+        });
+        saveState();
+        showToast('Pengumuman berhasil diterbitkan.', 'success');
+        renderApp();
+      });
+
+      const searchInp = document.getElementById('ann-search-input');
+      const tagSel = document.getElementById('ann-tag-filter');
+      const wrap = document.getElementById('ann-feed-wrap');
+
+      const attachAnnDelete = () => {
+        document.querySelectorAll('.del-ann-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.announcements = state.announcements.filter(a => a.id !== btn.dataset.delAnn);
+            saveState();
+            showToast('Pengumuman dihapus.', 'info');
+            refreshAnn();
+          });
+        });
+      };
+
+      const refreshAnn = () => {
+        if (!wrap) return;
+        wrap.innerHTML = renderAnnouncementCards(searchInp?.value || '', tagSel?.value || 'ALL');
+        attachAnnDelete();
+      };
+
+      searchInp?.addEventListener('input', refreshAnn);
+      tagSel?.addEventListener('change', refreshAnn);
+      attachAnnDelete();
+    }
+
+    function bindAspirasiEvents() {
+      const anonCheck = document.getElementById('asp-anon-check');
+      const idWrap = document.getElementById('asp-identity-wrap');
+      anonCheck?.addEventListener('change', () => {
+        idWrap?.classList.toggle('hidden', anonCheck.checked);
+      });
+
+      const form = document.getElementById('asp-create-form');
+      form?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const subject = String(fd.get('subject') || '').trim();
+        const detail = String(fd.get('detail') || '').trim();
+        if (!subject || !detail) return;
+        const isAnon = Boolean(fd.get('isAnon'));
+        const sender = String(fd.get('sender') || '').trim();
+        const ticketCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+
+        state.aspirations.unshift({
+          id: 'asp-' + Date.now().toString(36),
+          ticketCode,
+          mode: String(fd.get('mode') || 'Saran / Ide Proker'),
+          target: String(fd.get('target') || 'OSIS'),
+          subject,
+          detail,
+          isAnon,
+          sender: isAnon ? 'Anonim' : (sender || 'Siswa'),
+          status: 'Diterima',
+          reply: '',
+          upvotes: 0,
+          pinned: false,
+          createdAt: formatIndoDate(todayIso())
+        });
+        saveState();
+        showToast(`Tiket #${ticketCode} berhasil dikirim.`, 'success');
+        renderApp();
+      });
+
+      const orgSel = document.getElementById('asp-filter-org');
+      const stSel = document.getElementById('asp-filter-status');
+      const boardWrap = document.getElementById('asp-board-wrap');
+
+      const attachUpvote = () => {
+        document.querySelectorAll('.asp-upvote-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.upvoteId;
+            const asp = state.aspirations.find(x => x.id === id);
+            if (!asp) return;
+            const idx = state.upvotedIds.indexOf(id);
+            if (idx === -1) {
+              state.upvotedIds.push(id);
+              asp.upvotes += 1;
+            } else {
+              state.upvotedIds.splice(idx, 1);
+              asp.upvotes = Math.max(0, asp.upvotes - 1);
+            }
+            saveState();
+            refreshBoard();
+          });
+        });
+      };
+
+      const refreshBoard = () => {
+        if (!boardWrap) return;
+        boardWrap.innerHTML = renderAspirationBoard(orgSel?.value || 'ALL', stSel?.value || 'ALL');
+        attachUpvote();
+      };
+
+      orgSel?.addEventListener('change', refreshBoard);
+      stSel?.addEventListener('change', refreshBoard);
+      attachUpvote();
+    }
+
+    function bindJadwalVotingEvents() {
+      const form = document.getElementById('schedule-add-form');
+      form?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const title = String(fd.get('title') || '').trim();
+        if (!title) return;
+        state.schedules.push({
+          id: 'sch-' + Date.now().toString(36),
+          title,
+          org: String(fd.get('org') || 'OSIS'),
+          date: String(fd.get('date') || todayIso()),
+          time: String(fd.get('time') || '').trim(),
+          location: String(fd.get('location') || '').trim(),
+          gear: String(fd.get('gear') || '').trim()
+        });
+        saveState();
+        showToast('Agenda kegiatan ditambahkan.', 'success');
+        renderApp();
+      });
+
+      const gridWrap = document.getElementById('schedule-grid-wrap');
+      const catBtns = document.querySelectorAll('.sch-cat-btn');
+      let currentCat = 'ALL';
+
+      const attachScheduleCardActions = () => {
+        document.querySelectorAll('.ics-dl-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const ev = state.schedules.find(x => x.id === btn.dataset.icsId);
+            if (ev) exportCalendarIcs(ev);
+          });
+        });
+        document.querySelectorAll('.del-sch-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.schedules = state.schedules.filter(x => x.id !== btn.dataset.delSch);
+            saveState();
+            showToast('Agenda dihapus.', 'info');
+            if (gridWrap) {
+              gridWrap.innerHTML = renderScheduleGrid(currentCat);
+              attachScheduleCardActions();
+            }
+          });
+        });
+      };
+
+      catBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentCat = btn.dataset.schCat;
+          catBtns.forEach(b => {
+            b.classList.remove('bg-[var(--ink-main)]', 'text-[var(--bg-paper)]');
+            b.classList.add('bg-[var(--bg-surface)]', 'text-[var(--ink-main)]');
+          });
+          btn.classList.remove('bg-[var(--bg-surface)]', 'text-[var(--ink-main)]');
+          btn.classList.add('bg-[var(--ink-main)]', 'text-[var(--bg-paper)]');
+          if (gridWrap) {
+            gridWrap.innerHTML = renderScheduleGrid(currentCat);
+            attachScheduleCardActions();
+          }
+        });
+      });
+
+      attachScheduleCardActions();
+
+      // Polling Handlers
+      const pollForm = document.getElementById('poll-create-form');
+      pollForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(pollForm);
+        const question = String(fd.get('question') || '').trim();
+        const options = [fd.get('opt1'), fd.get('opt2'), fd.get('opt3')]
+          .map(v => String(v || '').trim())
+          .filter(Boolean)
+          .map((label, i) => ({ id: `opt-${i}-${Date.now().toString(36)}`, label, votes: 0 }));
+
+        if (!question || options.length < 2) {
+          showToast('Isi pertanyaan dan minimal 2 opsi pilihan.', 'warning');
+          return;
+        }
+        state.polls.unshift({
+          id: 'poll-' + Date.now().toString(36),
+          question,
+          options
+        });
+        saveState();
+        showToast('Polling baru diterbitkan.', 'success');
+        renderApp();
+      });
+
+      document.querySelectorAll('.vote-opt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const pollId = btn.dataset.pollId;
+          const optId = btn.dataset.optId;
+          const poll = state.polls.find(p => p.id === pollId);
+          if (!poll) return;
+
+          const prevOptId = state.votedPolls[pollId];
+          if (prevOptId === optId) {
+            showToast('Pilihan ini sudah tercatat untuk browser kamu.', 'info');
+            return;
+          }
+          if (prevOptId) {
+            const prevOpt = poll.options.find(o => o.id === prevOptId);
+            if (prevOpt && prevOpt.votes > 0) prevOpt.votes -= 1;
+          }
+          const nextOpt = poll.options.find(o => o.id === optId);
+          if (nextOpt) {
+            nextOpt.votes += 1;
+            state.votedPolls[pollId] = optId;
+            saveState();
+            showToast('Suara berhasil direkam.', 'success');
+            renderApp();
+          }
+        });
+      });
+
+      document.querySelectorAll('.del-poll-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.polls = state.polls.filter(p => p.id !== btn.dataset.delPoll);
+          saveState();
+          showToast('Polling dihapus.', 'info');
+          renderApp();
+        });
+      });
+    }
+
+    function bindMadingEvents() {
+      const form = document.getElementById('mading-submit-form');
+      form?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const title = String(fd.get('title') || '').trim();
+        const creator = String(fd.get('creator') || '').trim();
+        const story = String(fd.get('story') || '').trim();
+        const mediaUrl = String(fd.get('mediaUrl') || '').trim();
+        if (!title || !story) return;
+
+        // Auto-approve if submitted by internal role, otherwise enters Pengurus Curation Queue
+        const autoApprove = isInternalRole();
+
+        state.mading.unshift({
+          id: 'md-' + Date.now().toString(36),
+          category: String(fd.get('category') || 'PRESTASI'),
+          title,
+          creator: creator || 'Siswa',
+          mediaUrl,
+          story,
+          status: autoApprove ? 'Disetujui' : 'Menunggu Kurasi',
+          applause: 0,
+          date: formatIndoDate(todayIso())
+        });
+        saveState();
+        showToast(
+          autoApprove
+            ? 'Karya & prestasi langsung ditayangkan di mading.'
+            : 'Kiriman masuk ke antrean kurasi pengurus!',
+          'success'
+        );
+        renderApp();
+      });
+
+      document.querySelectorAll('.mading-applaud-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.applaudId;
+          const item = state.mading.find(x => x.id === id);
+          if (!item) return;
+          const idx = state.applaudedMadingIds.indexOf(id);
+          if (idx === -1) {
+            state.applaudedMadingIds.push(id);
+            item.applause = (item.applause || 0) + 1;
+          } else {
+            state.applaudedMadingIds.splice(idx, 1);
+            item.applause = Math.max(0, (item.applause || 0) - 1);
+          }
+          saveState();
+          renderApp();
+        });
+      });
+    }
+
+    function bindLostFoundEvents() {
+      const form = document.getElementById('lf-create-form');
+      form?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const item = String(fd.get('item') || '').trim();
+        const location = String(fd.get('location') || '').trim();
+        const contact = String(fd.get('contact') || '').trim();
+        if (!item || !location) return;
+
+        state.lostFound.unshift({
+          id: 'lf-' + Date.now().toString(36),
+          kind: String(fd.get('kind') || 'Barang Hilang'),
+          item,
+          location,
+          contact: contact || 'Pos Piket OSIS',
+          detail: String(fd.get('detail') || '').trim(),
+          status: 'Belum Diambil',
+          date: formatIndoDate(todayIso())
+        });
+        saveState();
+        showToast('Laporan barang berhasil diterbitkan.', 'success');
+        renderApp();
+      });
+
+      const kindSel = document.getElementById('lf-kind-filter');
+      const stSel = document.getElementById('lf-status-filter');
+      const wrap = document.getElementById('lf-board-wrap');
+
+      const attachLfActions = () => {
+        document.querySelectorAll('.toggle-lf-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const lf = state.lostFound.find(x => x.id === btn.dataset.toggleLf);
+            if (!lf) return;
+            lf.status = lf.status === 'Belum Diambil' ? 'Sudah Kembali ke Pemilik' : 'Belum Diambil';
+            saveState();
+            showToast(`Status diperbarui: ${lf.status}`, 'success');
+            refreshLf();
+          });
+        });
+        document.querySelectorAll('.del-lf-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.lostFound = state.lostFound.filter(x => x.id !== btn.dataset.delLf);
+            saveState();
+            showToast('Laporan barang dihapus.', 'info');
+            refreshLf();
+          });
+        });
+      };
+
+      const refreshLf = () => {
+        if (!wrap) return;
+        wrap.innerHTML = renderLostFoundBoard(kindSel?.value || 'ALL', stSel?.value || 'ALL');
+        attachLfActions();
+      };
+
+      kindSel?.addEventListener('change', refreshLf);
+      stSel?.addEventListener('change', refreshLf);
+      attachLfActions();
+    }
+
+    function bindModerasiEvents() {
+      document.querySelectorAll('.approve-mading-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = state.mading.find(m => m.id === btn.dataset.approveMading);
+          if (!item) return;
+          item.status = 'Disetujui';
+          saveState();
+          showToast('Karya disetujui & tayang di Mading Siswa.', 'success');
+          renderApp();
+        });
+      });
+
+      document.querySelectorAll('.reject-mading-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.mading = state.mading.filter(m => m.id !== btn.dataset.rejectMading);
+          saveState();
+          showToast('Kiriman karya ditolak / dihapus.', 'info');
+          renderApp();
+        });
+      });
+
+      const orgSel = document.getElementById('mod-org-filter');
+      const stSel = document.getElementById('mod-status-filter');
+      const wrap = document.getElementById('mod-inbox-wrap');
+
+      const attachModItemHandlers = () => {
+        document.querySelectorAll('.mod-save-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const card = btn.closest('[data-ticket-id]');
+            if (!card) return;
+            const asp = state.aspirations.find(a => a.id === card.dataset.ticketId);
+            if (!asp) return;
+            asp.status = card.querySelector('.mod-status-sel')?.value || asp.status;
+            asp.reply = String(card.querySelector('.mod-reply-inp')?.value || '').trim();
+            saveState();
+            showToast(`Tiket #${asp.ticketCode} diperbarui.`, 'success');
+            refreshMod();
+          });
+        });
+
+        document.querySelectorAll('.pin-asp-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const asp = state.aspirations.find(a => a.id === btn.dataset.pinAsp);
+            if (!asp) return;
+            asp.pinned = !asp.pinned;
+            saveState();
+            showToast(asp.pinned ? 'Aspirasi disematkan.' : 'Sematan dilepas.', 'info');
+            refreshMod();
+          });
+        });
+
+        document.querySelectorAll('.del-asp-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.delAsp;
+            openConfirm('Hapus Tiket Aspirasi?', 'Tiket ini akan dihapus permanen dari papan publik dan kotak masuk.', () => {
+              state.aspirations = state.aspirations.filter(a => a.id !== id);
+              saveState();
+              showToast('Tiket dihapus.', 'info');
+              refreshMod();
+            });
+          });
+        });
+      };
+
+      const refreshMod = () => {
+        if (!wrap) return;
+        wrap.innerHTML = renderModerasiList(orgSel?.value || 'ALL', stSel?.value || 'ALL');
+        attachModItemHandlers();
+      };
+
+      orgSel?.addEventListener('change', refreshMod);
+      stSel?.addEventListener('change', refreshMod);
+      attachModItemHandlers();
+    }
+
+    function bindLiveEventEvents() {
+      const metaForm = document.getElementById('live-event-meta-form');
+      metaForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(metaForm);
+        state.liveEvent.eventName = String(fd.get('eventName') || '').trim();
+        state.liveEvent.eventDate = String(fd.get('eventDate') || todayIso());
+        saveState();
+        showToast('Identitas acara hari-H disimpan.', 'success');
+        renderApp();
+      });
+
+      const sesForm = document.getElementById('live-session-add-form');
+      sesForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(sesForm);
+        const time = String(fd.get('time') || '').trim();
+        const title = String(fd.get('title') || '').trim();
+        const pic = String(fd.get('pic') || '').trim();
+        if (!time || !title) return;
+        state.liveEvent.sessions.push({
+          id: 'ses-' + Date.now().toString(36),
+          time,
+          title,
+          pic: pic || 'Panitia',
+          active: state.liveEvent.sessions.length === 0
+        });
+        saveState();
+        showToast('Sesi rundown ditambahkan.', 'success');
+        renderApp();
+      });
+
+      document.querySelectorAll('.shift-rundown-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const delta = Number(btn.dataset.shiftMin || 0);
+          if (!state.liveEvent.sessions.length) {
+            showToast('Belum ada sesi rundown untuk digeser.', 'warning');
+            return;
+          }
+          state.liveEvent.sessions.forEach(s => {
+            s.time = shiftTimeString(s.time, delta);
+          });
+          saveState();
+          showToast(`Seluruh waktu rundown digeser ${delta > 0 ? '+' : ''}${delta} menit.`, 'success');
+          renderApp();
+        });
+      });
+
+      document.querySelectorAll('.activate-ses-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.activateSes;
+          state.liveEvent.sessions.forEach(s => {
+            s.active = s.id === id;
+          });
+          saveState();
+          showToast('Sesi aktif diperbarui.', 'info');
+          renderApp();
+        });
+      });
+
+      document.querySelectorAll('.del-ses-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.liveEvent.sessions = state.liveEvent.sessions.filter(s => s.id !== btn.dataset.delSes);
+          saveState();
+          renderApp();
+        });
+      });
+    }
+
+    function bindProkerEvents() {
+      const taskForm = document.getElementById('task-create-form');
+      taskForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(taskForm);
+        const title = String(fd.get('title') || '').trim();
+        if (!title) return;
+        state.tasks.unshift({
+          id: 'tsk-' + Date.now().toString(36),
+          title,
+          org: String(fd.get('org') || 'OSIS'),
+          pic: String(fd.get('pic') || '').trim(),
+          deadline: String(fd.get('deadline') || todayIso()),
+          status: 'Belum Mulai'
+        });
+        saveState();
+        showToast('Tugas ditambahkan ke board.', 'success');
+        renderApp();
+      });
+
+      document.querySelectorAll('.advance-task-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = state.tasks.find(x => x.id === btn.dataset.advanceTask);
+          if (!t) return;
+          if (t.status === 'Belum Mulai') t.status = 'Dikerjakan';
+          else if (t.status === 'Dikerjakan') t.status = 'Selesai';
+          saveState();
+          showToast(`Status tugas: ${t.status}`, 'success');
+          renderApp();
+        });
+      });
+
+      document.querySelectorAll('.del-task-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.tasks = state.tasks.filter(x => x.id !== btn.dataset.delTask);
+          saveState();
+          showToast('Tugas dihapus.', 'info');
+          renderApp();
+        });
+      });
+
+      const meetForm = document.getElementById('meeting-create-form');
+      meetForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(meetForm);
+        const agenda = String(fd.get('agenda') || '').trim();
+        const decisions = String(fd.get('decisions') || '').trim();
+        if (!agenda || !decisions) return;
+        state.meetings.unshift({
+          id: 'mt-' + Date.now().toString(36),
+          org: String(fd.get('org') || 'OSIS'),
+          date: String(fd.get('date') || todayIso()),
+          agenda,
+          decisions
+        });
+        saveState();
+        showToast('Notulensi rapat disimpan.', 'success');
+        renderApp();
+      });
+
+      document.querySelectorAll('.del-meet-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.meetings = state.meetings.filter(m => m.id !== btn.dataset.delMeet);
+          saveState();
+          showToast('Notulensi dihapus.', 'info');
+          renderApp();
+        });
+      });
+    }
+
+    function bindLogistikEvents() {
+      // Session Token & QR Generator
+      const sesForm = document.getElementById('att-session-form');
+      sesForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(sesForm);
+        const title = String(fd.get('title') || '').trim();
+        const org = String(fd.get('org') || 'OSIS');
+        let code = String(fd.get('customCode') || '').trim().toUpperCase().replace(/\s+/g, '-');
+        if (!code) {
+          const prefix = org === 'OSIS' ? 'OSIS' : 'AMB';
+          code = `${prefix}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+        }
+        state.attendanceSessions.unshift({
+          id: 'ases-' + Date.now().toString(36),
+          code,
+          title,
+          org,
+          date: todayIso(),
+          active: true
+        });
+        saveState();
+        showToast(`Token sesi ${code} diterbitkan.`, 'success');
+        renderApp();
+      });
+
+      // Self Check-In via Session Token
+      const checkInForm = document.getElementById('att-checkin-form');
+      checkInForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(checkInForm);
+        const name = String(fd.get('name') || '').trim();
+        const token = String(fd.get('token') || '').trim().toUpperCase();
+        const status = String(fd.get('status') || 'Hadir');
+        const session = state.attendanceSessions.find(s => s.active && s.code.toUpperCase() === token);
+        if (!session) {
+          showToast('Token sesi tidak ditemukan atau sudah ditutup.', 'danger');
+          return;
+        }
+        state.attendance.unshift({
+          id: 'att-' + Date.now().toString(36),
+          name,
+          org: session.org,
+          status,
+          date: todayIso(),
+          time: currentTimeHm(),
+          sessionCode: session.code
+        });
+        saveState();
+        showToast(`Check-in ${name} (${session.code}) berhasil!`, 'success');
+        renderApp();
+      });
+
+      document.querySelectorAll('.close-att-ses-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const s = state.attendanceSessions.find(x => x.id === btn.dataset.closeSes);
+          if (s) s.active = false;
+          saveState();
+          showToast('Sesi absensi ditutup.', 'info');
+          renderApp();
+        });
+      });
+
+      const attForm = document.getElementById('att-add-form');
+      attForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(attForm);
+        const name = String(fd.get('name') || '').trim();
+        if (!name) return;
+        state.attendance.unshift({
+          id: 'att-' + Date.now().toString(36),
+          name,
+          org: String(fd.get('org') || 'OSIS'),
+          status: String(fd.get('status') || 'Hadir'),
+          date: String(fd.get('date') || todayIso()),
+          time: currentTimeHm(),
+          sessionCode: 'MANUAL'
+        });
+        saveState();
+        showToast('Kehadiran manual dicatat.', 'success');
+        renderApp();
+      });
+
+      document.querySelectorAll('.del-att-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.attendance = state.attendance.filter(x => x.id !== btn.dataset.delAtt);
+          saveState();
+          renderApp();
+        });
+      });
+
+      const ledgerForm = document.getElementById('ledger-add-form');
+      ledgerForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(ledgerForm);
+        const note = String(fd.get('note') || '').trim();
+        const amount = Math.max(1, Number(fd.get('amount') || 0));
+        if (!note || !amount) return;
+        state.ledger.unshift({
+          id: 'ldg-' + Date.now().toString(36),
+          type: String(fd.get('type') || 'Pemasukan'),
+          org: String(fd.get('org') || 'OSIS'),
+          note,
+          amount
+        });
+        saveState();
+        showToast('Transaksi kas dicatat.', 'success');
+        renderApp();
+      });
+
+      document.querySelectorAll('.del-ledger-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.ledger = state.ledger.filter(x => x.id !== btn.dataset.delLedger);
+          saveState();
+          renderApp();
+        });
+      });
+
+      const invForm = document.getElementById('inv-add-form');
+      invForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(invForm);
+        const item = String(fd.get('item') || '').trim();
+        const qty = Math.max(1, Number(fd.get('qty') || 1));
+        const holder = String(fd.get('holder') || '').trim();
+        if (!item) return;
+        state.inventory.unshift({
+          id: 'inv-' + Date.now().toString(36),
+          item,
+          qty,
+          condition: String(fd.get('condition') || 'Baik'),
+          holder: holder || 'Sekretariat'
+        });
+        saveState();
+        showToast('Barang inventaris ditambahkan.', 'success');
+        renderApp();
+      });
+
+      document.querySelectorAll('.del-inv-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.inventory = state.inventory.filter(x => x.id !== btn.dataset.delInv);
+          saveState();
+          renderApp();
+        });
+      });
+    }
+
+    function bindPengaturanEvents() {
+      // PDF / Print Report Generator
+      const pdfForm = document.getElementById('pdf-report-form');
+      pdfForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(pdfForm);
+        openLetterheadPrintPreview(
+          String(fd.get('letterhead') || 'GABUNGAN'),
+          String(fd.get('docType') || 'notulensi')
+        );
+      });
+
+      // Fast Sync Code Copy
+      document.getElementById('copy-fast-sync-btn')?.addEventListener('click', () => {
+        const code = buildFastSyncCode();
+        const ok = copyTextSafely(code);
+        showToast(
+          ok ? 'Kode sinkronisasi disalin! Siap ditempel di WhatsApp.' : 'Gagal menyalin kode otomatis.',
+          ok ? 'success' : 'warning'
+        );
+      });
+
+      // Open QR Sync Modal
+      document.getElementById('open-qr-sync-btn')?.addEventListener('click', () => {
+        const code = buildFastSyncCode();
+        const modal = document.getElementById('qr-sync-modal');
+        document.getElementById('qr-svg-container').innerHTML = generateMatrixQrSvg(code);
+        document.getElementById('qr-sync-code-preview').value = code;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+
+      // Apply Pasted Sync Code
+      document.getElementById('apply-pasted-sync-btn')?.addEventListener('click', () => {
+        const raw = document.getElementById('paste-sync-code-input')?.value || '';
+        const mode = document.getElementById('import-mode-select')?.value || 'merge';
+        try {
+          const decoded = decodeFastSyncCode(raw);
+          applyIncomingDataset(decoded, mode);
+          showToast(`Kode sinkronisasi berhasil dimuat (${mode === 'merge' ? 'Digabung' : 'Diganti'}).`, 'success');
+          renderApp();
+        } catch (err) {
+          console.error('Fast sync code error:', err);
+          showToast('Kode sinkronisasi tidak valid. Pastikan diawali SORA1:', 'danger');
+        }
+      });
+
+      document.getElementById('settings-export-btn')?.addEventListener('click', exportJsonFile);
+
+      const fileInput = document.getElementById('settings-import-file');
+      const modeSelect = document.getElementById('import-mode-select');
+      fileInput?.addEventListener('change', e => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const mode = modeSelect?.value || 'merge';
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const incoming = JSON.parse(String(reader.result || '{}'));
+            applyIncomingDataset(incoming, mode);
+            showToast(`File JSON berhasil diimpor (${mode === 'merge' ? 'Digabung' : 'Diganti'}).`, 'success');
+            renderApp();
+          } catch (err) {
+            console.error('Import JSON failed:', err);
+            showToast('Format file JSON tidak valid.', 'danger');
+          }
+          e.target.value = '';
+        };
+        reader.readAsText(file);
+      });
+
+      document.getElementById('settings-reset-btn')?.addEventListener('click', () => {
+        openConfirm(
+          'Kosongkan Seluruh Data?',
+          'Semua pengumuman, aspirasi, jadwal, polling, mading, lost & found, live event, proker, absensi, kas, dan inventaris di perangkat ini akan dihapus bersih.',
+          () => {
+            const keepRole = state.role;
+            const keepCodes = { ...state.accessCodes };
+            const keepBranding = { ...state.branding };
+            const keepMaster = state.masterUnlocked;
+            state = createCleanProductionState();
+            state.role = keepRole;
+            state.accessCodes = keepCodes;
+            state.branding = keepBranding;
+            state.masterUnlocked = keepMaster;
+            saveState();
+            showToast('Seluruh data berhasil dikosongkan.', 'info');
+            renderApp();
+          }
+        );
+      });
+
+      const codesForm = document.getElementById('codes-update-form');
+      codesForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(codesForm);
+        const osis = String(fd.get('osis') || '').trim();
+        const ambalan = String(fd.get('ambalan') || '').trim();
+        const pembina = String(fd.get('pembina') || '').trim();
+        if (!osis || !ambalan || !pembina) return;
+        state.accessCodes = { osis, ambalan, pembina };
+        saveState();
+        showToast('Kode akses khusus berhasil diperbarui.', 'success');
+      });
+
+      const idForm = document.getElementById('school-identity-form');
+      idForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(idForm);
+        state.branding.title = String(fd.get('title') || 'SORA').trim() || 'SORA';
+        state.branding.subtitle = String(fd.get('subtitle') || '').trim();
+        state.branding.schoolName = String(fd.get('schoolName') || '').trim();
+        state.branding.schoolAddress = String(fd.get('schoolAddress') || '').trim();
+        saveState();
+        syncMasthead();
+        showToast('Identitas sekolah & kop surat diperbarui.', 'success');
+      });
+    }
+
+    // =========================================================================
+    // PWA MANIFEST & OFFLINE SERVICE WORKER REGISTRATION
+    // =========================================================================
+    function initOfflinePwa() {
+      try {
+        const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="42" fill="#E04F26"/><circle cx="96" cy="96" r="62" fill="none" stroke="#FFFFFF" stroke-width="10"/><polygon points="96,26 114,78 166,96 114,114 96,166 78,114 26,96 78,78" fill="#FFFFFF"/></svg>`;
+        const iconUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(iconSvg);
+
+        const manifestObj = {
+          name: 'SORA — Sinergi Organisasi & Aspirasi',
+          short_name: 'SORA',
+          start_url: './',
+          display: 'standalone',
+          background_color: '#F6F3EC',
+          theme_color: '#E04F26',
+          icons: [
+            { src: iconUrl, sizes: '192x192', type: 'image/svg+xml' },
+            { src: iconUrl, sizes: '512x512', type: 'image/svg+xml' }
+          ]
+        };
+
+        const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = URL.createObjectURL(manifestBlob);
+        document.head.appendChild(manifestLink);
+
+        if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
+          const swCode = `
+            const CACHE_NAME = 'sora-offline-v3';
+            self.addEventListener('install', e => {
+              self.skipWaiting();
+            });
+            self.addEventListener('activate', e => {
+              e.waitUntil(self.clients.claim());
+            });
+            self.addEventListener('fetch', e => {
+              if (e.request.method !== 'GET') return;
+              e.respondWith(
+                caches.open(CACHE_NAME).then(cache =>
+                  fetch(e.request)
+                    .then(res => {
+                      if (res && res.status === 200) cache.put(e.request, res.clone());
+                      return res;
+                    })
+                    .catch(() => cache.match(e.request))
+                )
+              );
+            });
+          `;
+          const swBlob = new Blob([swCode], { type: 'application/javascript' });
+          navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+        }
+      } catch (err) {
+        console.warn('PWA setup skipped:', err);
+      }
+
+      window.addEventListener('beforeinstallprompt', e => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        const installBtn = document.getElementById('pwa-install-btn');
+        if (installBtn) {
+          installBtn.classList.remove('hidden');
+          installBtn.classList.add('flex');
+        }
+      });
+    }
+
+    // Global Chrome & Modal Controls
+    function initGlobalBindings() {
+      const roleModal = document.getElementById('role-modal');
+      const openModalBtn = document.getElementById('open-role-modal-btn');
+      const closeModalBtn = document.getElementById('close-role-modal-btn');
+      const switchSiswaBtn = document.getElementById('switch-siswa-btn');
+      const verifyForm = document.getElementById('code-verify-form');
+      const codeInput = document.getElementById('special-code-input');
+      const codeError = document.getElementById('code-error-msg');
+
+      const openRoleModal = () => {
+        roleModal.classList.remove('hidden');
+        roleModal.classList.add('flex');
+        codeError?.classList.add('hidden');
+        setTimeout(() => codeInput?.focus(), 60);
+      };
+
+      const closeRoleModal = () => {
+        roleModal.classList.add('hidden');
+        roleModal.classList.remove('flex');
+      };
+
+      openModalBtn?.addEventListener('click', openRoleModal);
+      closeModalBtn?.addEventListener('click', closeRoleModal);
+      roleModal?.addEventListener('click', e => {
+        if (e.target === roleModal) closeRoleModal();
+      });
+
+      switchSiswaBtn?.addEventListener('click', () => {
+        state.role = 'SISWA';
+        ensureValidTab();
+        saveState();
+        closeRoleModal();
+        showToast('Beralih ke Mode Siswa (Menu internal disembunyikan).', 'success');
+        renderApp();
+      });
+
+      verifyForm?.addEventListener('submit', e => {
+        e.preventDefault();
+        const raw = String(codeInput?.value || '').trim();
+        const upper = raw.toUpperCase();
+        if (!raw) return;
+
+        // Master Creator Unlock Codes: 2009 and RUL2009
+        if (upper === '2009' || upper === 'RUL2009') {
+          state.masterUnlocked = true;
+          state.role = 'PEMBINA';
+          state.activeTab = 'moderasi';
+          saveState();
+          codeInput.value = '';
+          closeRoleModal();
+          showToast('Master Studio aktif (2009 / RUL2009) — Muhammad Nazrul Azhar.', 'warning');
+          renderApp();
+          return;
+        }
+
+        const { osis, ambalan, pembina } = state.accessCodes;
+
+        if (raw === osis || upper === osis.toUpperCase()) {
+          state.role = 'OSIS';
+          state.activeTab = 'moderasi';
+          saveState();
+          codeInput.value = '';
+          closeRoleModal();
+          showToast('Akses Pengurus OSIS dibuka.', 'success');
+          renderApp();
+          return;
+        }
+
+        if (raw === ambalan || upper === ambalan.toUpperCase()) {
+          state.role = 'DEWAN AMBALAN';
+          state.activeTab = 'moderasi';
+          saveState();
+          codeInput.value = '';
+          closeRoleModal();
+          showToast('Akses Dewan Ambalan dibuka.', 'success');
+          renderApp();
+          return;
+        }
+
+        if (raw === pembina || upper === pembina.toUpperCase()) {
+          state.role = 'PEMBINA';
+          state.activeTab = 'moderasi';
+          saveState();
+          codeInput.value = '';
+          closeRoleModal();
+          showToast('Akses Pembina dibuka.', 'success');
+          renderApp();
+          return;
+        }
+
+        if (codeError) {
+          codeError.textContent = 'Kode akses tidak cocok. Periksa kembali kode pengurus atau hubungi Pembina.';
+          codeError.classList.remove('hidden');
+        }
+      });
+
+      document.querySelectorAll('.master-role-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!state.masterUnlocked) return;
+          state.role = btn.dataset.masterRole;
+          ensureValidTab();
+          saveState();
+          closeRoleModal();
+          showToast(`Master Switcher: Aktif sebagai ${state.role}`, 'info');
+          renderApp();
+        });
+      });
+
+      // QR Sync Modal Controls
+      const qrModal = document.getElementById('qr-sync-modal');
+      document.getElementById('close-qr-modal-btn')?.addEventListener('click', () => {
+        qrModal.classList.add('hidden');
+        qrModal.classList.remove('flex');
+      });
+      document.getElementById('copy-sync-from-modal-btn')?.addEventListener('click', () => {
+        const val = document.getElementById('qr-sync-code-preview')?.value || '';
+        const ok = copyTextSafely(val);
+        showToast(ok ? 'Kode sinkronisasi disalin!' : 'Gagal menyalin kode.', ok ? 'success' : 'warning');
+      });
+      document.getElementById('dl-json-from-modal-btn')?.addEventListener('click', exportJsonFile);
+
+      // Print Sheet Controls
+      document.getElementById('trigger-window-print-btn')?.addEventListener('click', () => {
+        window.print();
+      });
+      document.getElementById('close-print-sheet-btn')?.addEventListener('click', () => {
+        document.getElementById('print-sheet')?.classList.add('hidden');
+      });
+
+      // Confirm Modal Controls
+      document.getElementById('confirm-cancel-btn')?.addEventListener('click', closeConfirm);
+      document.getElementById('confirm-ok-btn')?.addEventListener('click', () => {
+        const fn = pendingConfirmAction;
+        closeConfirm();
+        if (typeof fn === 'function') fn();
+      });
+
+      // Theme Toggle
+      document.getElementById('theme-toggle-btn')?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        applyTheme(isDark ? 'light' : 'dark');
+      });
+
+      // Quick Backup
+      document.getElementById('quick-backup-btn')?.addEventListener('click', exportJsonFile);
+
+      // PWA Install Prompt Trigger
+      document.getElementById('pwa-install-btn')?.addEventListener('click', async () => {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        document.getElementById('pwa-install-btn')?.classList.add('hidden');
+      });
+
+      // Brand Home
+      document.getElementById('brand-home-btn')?.addEventListener('click', () => {
+        state.activeTab = 'beranda';
+        saveState();
+        renderApp();
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+      initOfflinePwa();
+      initGlobalBindings();
+      renderApp();
+    });
+  </script>
+</body>
+</html>
