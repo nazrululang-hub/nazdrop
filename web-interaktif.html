@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Interaktif — NazDrop Studio</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #090d16 0%, #1e1b4b 50%, #064e3b 100%);
+      color: #f8fafc;
+      padding: 20px;
+    }
+    .card {
+      width: 100%;
+      max-width: 390px;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    h1 { font-size: 21px; margin-bottom: 8px; }
+    p { font-size: 13px; color: #cbd5e1; line-height: 1.55; margin-bottom: 20px; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(90deg, #6366f1, #10b981);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .counter { font-size: 12px; color: #34d399; margin-top: 12px; font-weight: 600; }
+  </style>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8C%90</text></svg>" />
+  <meta property="og:title" content="Web Interaktif — NazDrop Studio" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <style>html,body{overscroll-behavior-y:contain;-webkit-tap-highlight-color:transparent;}</style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">LIVE ON WEB</div>
+    <h1>Website Berhasil Terbit!</h1>
+    <p>Halaman ini dibuat dan dipublikasikan menggunakan <strong>NazDrop Studio v2.0</strong>. Siap dibagikan ke siapa saja!</p>
+    <button class="btn" onclick="tambahKlik()">Kirim Bintang ⭐</button>
+    <div class="counter" id="info">Total Bintang: 0</div>
+  </div>
+  <script>
+    let count = 0;
+    function tambahKlik() {
+      count++;
+      document.getElementById('info').textContent = 'Total Bintang: ' + count + ' ✨';
+    }
+  </script>
+</body>
+</html>
